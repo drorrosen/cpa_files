@@ -214,7 +214,8 @@ gemini_model = genai.GenerativeModel(
 
 @st.cache_resource
 def initialize_embeddings():
-    return OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+    return OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"]
+)
 
 @st.cache_resource
 def load_all_documents():
