@@ -208,7 +208,7 @@ generation_config = {
 
 # Initialize Gemini model
 gemini_model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash",
+    model_name="gemini-2.0-pro-exp-02-05",
     generation_config=generation_config,
 )
 
