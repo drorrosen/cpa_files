@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain-openai
+faiss-cpu
+google-generativeai
+pandas
+numpy
+pathlib
+openai 
