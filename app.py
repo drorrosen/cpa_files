@@ -199,7 +199,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 # Create Gemini model configuration
 generation_config = {
-    "temperature": 0.1,
+    "temperature": 0.0,
     "top_p": 0.5,
     "top_k": 20,
     "max_output_tokens": 8192,
@@ -208,7 +208,7 @@ generation_config = {
 
 # Initialize Gemini model
 gemini_model = genai.GenerativeModel(
-    model_name="gemini-1.5-pro",
+    model_name="gemini-2-flash",
     generation_config=generation_config,
 )
 
