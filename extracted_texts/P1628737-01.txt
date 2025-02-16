@@ -1,0 +1,961 @@
+
+
+              ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+              INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+                         AS OF SEPTEMBER 30, 2024 
+
+                               UNAUDITED 
+
+                                  INDEX 
+
+                                                                Page 
+
+Auditor's Review Report of Interim Financial Statements           2 
+
+Consolidated Statements of Financial Position                     3 
+
+Consolidated Statements of Profit or Loss and Comprehensive Income 4 
+
+Consolidated Statements of Changes in Members' Capital            5 
+
+Consolidated Statements of Cash Flows                             6 
+
+Notes to Interim Consolidated Financial Statements              7- 11 
+<<<
+
+                                         ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+EY                       Kost Forer Gabbay & Kasierer Tel: +972-3-6232525 
+                          144 Menachem Begin Road, Building A, Fax: +972-3-5622555 
+Building a better         Tel-Aviv 6492102, Israel     ey.com 
+working world 
+
+                                       Auditors' review report 
+
+                                        to the shareholders of 
+
+                    ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+Introduction 
+
+We have reviewed the accompanying financial information of Electra Multifamily Investments Fund II, L.P. 
+("the Partnership"), which comprises the condensed consolidated statements of financial position as of 
+September 30, 2024 and the related condensed consolidated statements of profit or loss and comprehensive 
+income for the nine and three months periods ended September 30, 2024, and changes in members' capital 
+and cash flows for the nine months periods ended September 30, 2024, and the related notes. The Partnership's 
+board of directors and management are responsible for the preparation and presentation of interim financial 
+information for these periods in conformity with U.S. generally accepted accounting principles. Our 
+responsibility is to express a conclusion on this interim financial information based on our review. 
+
+Scope of review 
+
+We conducted our review in accordance with Review Standard 2410 of the Institute of Certified Public 
+Accountants in Israel, "Review of interim Financial Information Performed by the independent Auditor of the 
+Entity". A review of interim financial information consists of making inquiries, primarily of persons 
+responsible for financial and accounting matters, and applying analytical and other review procedures. A 
+review is substantially less in scope than an audit conducted in accordance with generally accepted auditing 
+standards in Israel and consequently does not enable us to obtain assurance that we would become aware of 
+all significant matters that might be identified in an audit. Accordingly, we do not express an audit opinion. 
+
+Conclusion 
+
+Based on our review nothing has come to our attention that causes us to believe that the accompanying interim 
+financial information is not prepared, in all material respects, in conformity with U.S. generally accepted 
+accounting principles, which differ in certain respects from the IFRS, as describe in Note 8, to the consolidated 
+financial statements. 
+
+ Tel-Aviv, Israel                                              KOST FORER GABBAY & KASIERER 
+November 24, 2024                                                A Member of Ernst & Young Global 
+
+                                                 - 2 - 
+<<<
+
+                                     ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+CONSOLIDATED STATEMENTS OF FINANCIAL POSITION 
+
+                                                              September 30,    December 31, 
+                                                                  2024              2023 
+                                                               Unaudited           Audited 
+                                                      Note        U.S. dollars in thousands 
+
+    ASSETS 
+
+ Real estate, net                                       3       471,057             523,789 
+ Investments in unconsolidated entities                 4        42,449              71,955 
+ Investments in unconsolidated entities, held for sale 4a        23,632 
+ Cash                                                            17,885              14,480 
+ Restricted cash                                                 11,722              12,933 
+ Accounts receivable                                              1,121               1,254 
+ Receivables due from related parties                             2,142               2,120 
+ Other assets                                                       627                 475 
+ Assets on property held for sale                                43,563                    I 
+
+ Total assets                                                   614,198             627,006 
+
+    LIABILITIES AND MEMBERS' CAPITAL 
+
+ Real estate mortgages, net                                     382,244             414,835 
+ Accounts payable                                                12,509              13,888 
+ Accounts payable due to related party                  6                               231 
+ Security deposits payable                                          174                 263 
+ Other liabilities                                               10,665              10,830 
+ Liabilities on property held for sale                           31,569 
+
+ Total liabilities                                              437,161             440,047 
+
+ MEMBERS' CAPITAL: 
+ Members' capital                                               177,038             186,959 
+
+ Total liabilities and members' capital                         614,198             627,006 
+
+ The accompanying notes are an integral part of the consolidated financial statements. 
+
+      November 24, 2024 
+     Date of approval of the          Joseph G. Lubeck                 James G. Miller 
+      financial statements            Managing Member                     Member 
+
+                                             - 3 - 
+<<<
+
+                                      ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+CONSOLIDATED STATEMENTS OF PROFIT OR LOSS 
+
+                                              Nine months ended        Three months ended 
+                                                September 30,             September 30, 
+                                               2024        2023        2024         2023 
+                                                  Unaudited                Unaudited 
+                                      Note               U.S. dollars in thousands 
+ Revenues: 
+   Rental income                               55,226      54,365       18,504      18,241 
+   Other income                                               141                      141 
+
+ Expenses: 
+   Rental expenses                             26,160      26,427        8,531       8,937 
+   General and administrative expenses          3,735       3,878        1,220       1,263 
+   Depreciation                                12,444      12,197        4,173       4,091 
+
+ Total expenses                                42,339      42,502       13,924      14,291 
+
+ Fund's share of profit (loss) of entities 
+   accounted for at equity                      1,154      11,304         488        8,150 
+ Dividend income                                             (169)           -        (230) 
+ Gain (loss) on sale                              263                     263 
+
+ Income before interest expense - 
+   mortgage loans                              14,304      23,139        5,331      12,011 
+
+ Interest expense - mortgage loans             14,259      12,307        5,992       4,198 
+
+ Income\ before interest to related parties        45      10,832        (661)       7,813 
+
+ Interest expense to related parties - 
+   members' loans and related parties' 
+   loans                                5          10          84       (1,280) 
+ Interest expense to non-related parties                     1,878                    602 
+
+ Net Income                                        35        8,870        619        7,211 
+
+ Attributable to: 
+   Equity holders of the Company                 (730)      8,263         445        7,025 
+   Non-controlling interests                      765         607         174          186 
+
+ Comprehensive Income                              35        8,870        619        7,211 
+
+ The accompanying notes are an integral part of the consolidated financial statements. 
+
+                                             - 4 - 
+<<<
+
+                                      ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+CONSOLIDATED STATEMENTS OF CHANGES IN MEMBERS' CAPITAL 
+
+                                                                       Non- 
+                                                       Members      controlling      Total 
+                                                        capital       interest      capital 
+
+                                                              U.S. dollars in thousands 
+
+ Balance as of January 1, 2024 (audited)                156,614        30,345        186,959 
+
+ Members' distributions                                  (7,757)        (2,200)       (9,957) 
+ Income                                                    (730)          765            35 
+
+ Balance as of September 30, 2024 (unaudited)           148,127        28,910        177,037 
+
+                                                                       Non- 
+                                                       Members      controlling      Total 
+                                                        capital       interest      capital 
+
+                                                              U.S. dollars in thousands 
+
+ Balance as of January 1, 2023 (audited)                193,947        32,435       226,382 
+
+ Members' distributions                                 (19,505)       (2,170)       (21,675) 
+ Income                                                   8,263           607          8,870 
+
+ Balance as of September 30, 2023 (audited)             182,705        30,872       213,577 
+
+ The accompanying notes are an integral part of the consolidated financial statements. 
+
+                                             - 5 - 
+<<<
+
+                                      ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+CONSOLIDATED STATEMENTS OF CASH FLOWS 
+
+                                                                      Nine months ended. 
+                                                                         September 30, 
+                                                                       2024        2023 
+                                                                           Unaudited 
+                                                                    U.S. dollars in thousands 
+
+ Cash flows from operating activities: 
+
+ Net income (loss)                                                    35             8,870 
+ Adjustments to reconcile net income (loss) to net cash provided by 
+  operating activities: 
+   Depreciation                                                   12,444            12,197 
+   Amortization of deferred financing costs, real estate mortgage loans 544            654 
+   Group's share of earnings of companies accounted for at equity, net 33,157       36,766 
+   Group's share of earnings of companies accounted for at equity, 
+    held for sale                                                (27,282) 
+   Interest to related parties                                                          84 
+   Gain on sale of investment in investee                                           (7,933) 
+
+   Increase in accounts receivable                                    56              (958) 
+   Increase (decrease) in accounts payable                          (116)             (115) 
+   Increase (decrease) in accrued expenses                          (671)             (124) 
+   Increase (decrease) in security deposits payable                  (49)              (58) 
+   Increase (decrease) in other liabilities                          (92)           (24,673) 
+   Decrease (increase) in receivables due from related parties       (23)              446 
+   Increase in payables due to related parties                      (263)             (275) 
+   Increase in prepaid expenses                                     (421)              (91) 
+
+ Net cash provided by operating activities                        17,319            24,790 
+
+ Cash flows from investing activities: 
+
+ Investments in improvements and equipment                        (1,917)           (2,611) 
+
+ Net cash provided by (used in) investing activities              (1,917)           (2,611) 
+ Cash flows from financing activities: 
+
+ Distribution to the Fund's members                               (7,757)          (19,505) 
+ (Repayment) Receipt of real estate mortgages, net                (2,240)            (1,913) 
+ Distribution attributable to non-controlling interests           (2,200)            (2,170) 
+
+ Net cash used in financing activities                           (12,197)           (23,588) 
+
+ Net (decrease) increase in cash and restricted cash               3,205            (1,409) 
+ Cash and restricted cash at the beginning of the period          27,413            50,485 
+
+ Cash and restricted cash at the end of the period                30,618            49,076 
+
+ Cash paid during the period for: 
+ Interest paid                                                                           - 
+
+ The accompanying notes are an integral part of the consolidated financial statements. 
+
+                                             - 6 - 
+<<<
+
+                                        ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 1 :- GENERAL 
+
+            Electra Multifamily Investments Fund II, L.P., a Delaware limited partnership, was incorporated 
+            on April 3, 2018 ("the Fund"). The Fund conducts all of its operations through consolidated and 
+            investee entities. The Fund is in the business of acquiring and owning a portfolio of quality and 
+            growth potential properties in the southeast of the United States. The Fund's properties are 
+            managed by American Landmark Management ("the Management Company"), a related party of 
+            the Fund. 
+
+            These financial statements have been prepared in a condensed format as of September 30, 2024, 
+            and for the nine- and three-month periods that ended ("interim    consolidated financial 
+            statements"). These financial statements should be read in conjunction with the Company's annual 
+            financial statements as of December 31, 2023, and for the period that ended and the accompanying 
+           notes ("annual consolidated financial statements"). 
+
+            The Fund was formed by the EMIF II Management LLC GP ("the General Partner"), a related 
+           party of the Fund. The ownership rights in the Fund are held by EMIF II- Feeder I, L.P., EMIF 
+            II- Feeder II, L.P., EMIF II- Feeder IIA, L.P., EMIF II- Feeder III, L.P., EMIF II- Feeder IIIA, 
+            L.P., EMIF II- Feeder IV, L.P., and EMIF II- Feeder V, L.P. 
+
+            In July 2019, the Fund announced on final closing and raise of a total amount of $ 462 million. 
+            The General Partner (along with its related parties) invests a minimum of $30 million or 10% of 
+            the entire investment commitments in the Fund. Moreover, the Fund's agreements determine the 
+            investment policy and the entitlement to promote payments to the General Partner, and related 
+            parties. 
+
+            As of September 30, 2024, the Fund owns twenty-five properties, twelve properties held through 
+            consolidated entities with an aggregate of 3,683 apartment units, thirteen properties, with an 
+            aggregate of 5,255 apartment units, are held through investee entities in which the Fund does not 
+           have control but rather significant influence. 
+
+NOTE 2 :- SIGNIFICANT ACCOUNTING POLICIES 
+
+            Basis of preparation of the interim consolidated financial statements: 
+
+            The significant accounting policies and methods of computation adopted in the preparation of the 
+            interim consolidated financial statements are consistent with those followed in the preparation of 
+            the annual consolidated financial statements. 
+
+            Cash, cash equivalents, and restricted cash are included in the following: 
+                                                                   September 30,     December 31, 
+                                                                        2024             2023 
+                                                                     Unaudited          Audited 
+                                                                       U.S. dollars in thousands 
+
+             Cash and cash equivalents as reported on the balance sheet 17,885            14,480 
+             Restricted cash as reported on the financial statements     11,722           12,933 
+             Cash and restricted cash as reported on BS - HFS District    1,011 
+
+             Cash, cash equivalents, and restricted cash as reported in 
+              the statement of cash flow                                 30,618           27,413 
+
+                                                - 7 - 
+<<<
+
+                                      ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 3 :- REAL ESTATE, NET 
+           a.    Real estate, net consisted of the following: 
+                                                                September 30, December 31, 
+                                                                     2024           2023 
+                                                                  Unaudited        Audited 
+                                                                    U.S. dollars in thousands 
+                  Land                                                54,320        54,320 
+                 Building, improvements and equipment               547,220        545,303 
+                  Accumulated depreciation                           (88,279)       (75,834) 
+
+                  Real estate, net                                  513,261        523,789 
+
+            b.   The following are consolidated investments: 
+
+                 Name of property                 Location      Units    % EMIFII 
+
+                 Evolv                          Texas            334      62% 
+                 Haven at Liberty Hills         Texas            246      100% 
+                 Hilltops                       Texas            208      100% 
+                 23 Hundred at Ridgeview        Texas            480       70% 
+                 Presley Oaks                  North Carolina    318       72% 
+                 The District                  North Carolina    287      67% 
+                 The View at Lakeside           Texas            360       83% 
+                 Luxe at 1820                  Florida           300       80% 
+                 Alon at Castle Hills           Texas            306      100% 
+                 Elite 99 West                  Texas            360       83% 
+                 The JaXon                      Texas            250      100% 
+                 Lakefront Villas               Texas            234      100% 
+
+            a. In Q3-24, The Fund signed a "Purchase Sale Agreement" to sell its rights in an asset located 
+            in North Carolina, The District. The initial invested capital by the Fund was US$ 12.7 million 
+
+ NOTE 4 :- INVESTMENTS IN UNCONSOLIDATED ENTITIES 
+
+           a.    The following are investments accounted for using the equity method: 
+
+                 Name of property                         Location       Units    % EMIF 
+
+                 200 East                              North Carolina     330       25% 
+                  Sterling Town Center                 North Carolina     339      41% 
+                 Beck at Wells Branch                  Texas              576      50% 
+                 Hayden at Enclave                     Texas              476      60% 
+                 Cielo Boca                            Florida            448       30% 
+                 Mezza                                 Florida            440       41% 
+                  The Logan                             Texas             490       48% 
+                 Laurel Heights at Cityview             Texas             440      48% 
+                 Ranch ThreeOFive                      Texas              226       48% 
+                  The Regent                            Texas             460       48% 
+                  The Hamilton                          Tennessee         232       49% 
+                  Amira at Westly                      Florida            408       40% 
+                 Four Corners                           Texas             390       49% 
+
+                                               - 8 - 
+<<<
+
+                                        ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 4a :- INVESTMENTS IN UNCONSOLIDATED ENTITIES 
+
+            a.    The following are investments classified on the consolidated balance sheets as investments 
+                  in unconsolidated entities held for sale: 
+
+                  Name of property                           Location        Units      % EMIF 
+
+                  Ranch ThreeOFive                        Texas               226        48% 
+                  Four Corners                            Texas               390        49% 
+                  Cielo Boca                              Florida             448        30% 
+                  Amira at Westly                         Florida             408        40% 
+
+            b. In Q3-24, The Fund signed a "Purchase Sale Agreement" to sell its rights in an asset located 
+                in Texas, Ranch ThreeOFive. The initial invested capital by the Fund was US$ 6.4 million. 
+
+            c. In Q3-24, The Fund signed a "Purchase Sale Agreement" to sell its rights in an asset located 
+                in Texas, Four Corners. The initial invested capital by the Fund was US$ 12.5 million. 
+
+            d. In Q3-24, The Fund signed a "Purchase Sale Agreement" to sell its rights in an asset located 
+                in Florida, Cielo Boca. The initial invested capital by the Fund was US$ 10.5 million. 
+
+            e. In Q3-24, The Fund signed a "Purchase Sale Agreement" to sell its rights in an asset located 
+                in Florida, Amira at Westley. The initial invested capital by the Fund was US$ 12.1 million. 
+
+            f. Subsequent to Q3-24, the Fund sold its rights in an asset located in Texas, 4 Corners. The sale 
+                of this asset resulted in US$ 22.5 million of proceeds, representing 100% of the asset. 
+
+            g. Subsequent to Q3-24, the Fund sold its rights in an asset located in Florida, Amira at Westley. 
+                The sale of this asset resulted in US$ 18.3 million of proceeds, representing 100% of the asset. 
+
+            h. Subsequent to Q3-24, the Fund sold its rights in an asset located in Florida, Cielo Boca. The 
+                sale of this asset resulted in US$ 19.1 million of proceeds, representing 100% of the asset. 
+
+                                                 - 9 - 
+<<<
+
+                                       ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+ NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+ NOTE 5 :- LOANS PAYABLE TO RELATED PARTIES 
+
+            As of September 30, 2024, the loan that was provided to the Fund by EMIF II Feeder I, L.P., 
+            EMIF II Feeder II, L.P., EMIF II Feeder IIA, L.P and EMIF II Feeder III, L.P., EMIF II Feeder 
+            IIIA, L.P., and EMIF II Feeder V, L.P was paid in full. 
+
+NOTE 6 :- ACCOUNTS PAYABLE TO RELATED PARTIES 
+
+            Other payables due to related parties on the consolidated balance sheet represent cash held and 
+            owed to Feeder Blocker entities from declared distributions of $9.1 million as of September 30, 
+            2024. The cash is held in an interest-bearing account on behalf of the Blocker entities and 
+            amounts due to the Blocker entities from future cash flows. 
+
+NOTE 7 :- SUBSEQUENT EVENTS 
+
+            Management has evaluated all events transactions that occurred after September 30, 2024, 
+            through November 24, 2024, the date on which the statements were available and issued, and 
+            expected for the above-referenced, and noted no items require additional adjustments of the 
+            statements or additional disclosures. 
+
+                                               - 10 - 
+<<<
+
+                                          ELECTRA MULTIFAMILY INVESTMENTS FUND II, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 8 :- DIFFERENCES BETWEEN U.S. GAAP AND IFRS 
+
+             The financial statements are prepared in accordance with U.S. GAAP, which differ in certain 
+            respects from IFRS. The differences which affect the balance sheets and statements of operations 
+            relate principally to the following items: 
+
+             a.    Reconciliation of consolidated balance sheets from U.S. GAAP to IFRS: 
+
+                                                             September 30, 2024 
+                                                       As                       As per 
+                                                    reported     Adjustment      IFRS 
+                                                          U.S. dollars in thousands          Note 
+
+                   Real estate, net                  471,057       237,153       708,210      (1) 
+                   Investment in unconsolidated 
+                     entities                         42,449        97,650      140,099       (2) 
+                   Investment in unconsolidated 
+                     entities - Held for sale         23,632        38,579       62,211 
+                    Assets on property held for sale 43,563         21,295       64,858 
+
+                   Members' capital                  177,037       394,677      571,714 
+
+            b.     Reconciliation of consolidated profit or loss from U.S. GAAP to IFRS: 
+
+                                                        Nine months ended September 30, 2024 
+                                                      As                       As per 
+                                                   reported    Adjustment      IFRS 
+                                                          US dollars in thousands          Note 
+
+                   Depreciation                     (12,444)       12,444 
+                   Partnership's share of profit of 
+                     entities accounted for at equity 1,154      (39,486)      (38,332) 
+                   Partnership's share of valuation               (9,919)       (9,919) 
+
+                   Profit (Loss)                         35      (36,961)      (36,926) 
+
+                   (1)   Real estate, net - the investment properties are presented according to their fair value. 
+                         Thus, for the conversion from U.S. GAAP to IFRS, those depreciation expenses are 
+                         eliminated, and the real estate properties are presented according to their fair value. 
+                         In addition, closing costs capitalized and included in the assets carrying value under 
+                         US GAAP are expensed in accordance with IFRS. 
+
+                   (2)   Investment in unconsolidated entities - the depreciation expenses of the real estate 
+                         assets are eliminated, and the real estate properties are presented according to their 
+                         Fair value. In addition, closing costs in association with acquiring the asset are 
+                         expensed under IFRS and therefore eliminated from the carrying value of the asset. 
+                         Thus, the investment in unconsolidated entities and the Partnership's share of profits 
+                         of entities accounted for at equity are adjusted to reflect the elimination of 
+                         depreciation and the addition of closing costs and valuations. 
+
+                                                  - 11 - 
+<<<
+
+                         ALEMIF III REIT HOLDINGS, L.P. 
+
+                INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+                            AS OF SEPTEMBER 30, 2024 
+
+                                  UNAUDITED 
+
+                                    INDEX 
+
+                                                                   Page 
+
+Auditor's Review Report of Interim Financial Statement               2 
+
+Consolidated Statements of Financial Position                        3 
+
+Consolidated Statements of Profit or Loss                            4 
+
+Consolidated Statements of Changes in Members' Capital               5 
+
+Consolidated Statements of Cash Flows                               6-7 
+
+Notes to Interim Consolidated Financial Statements                  8-11 
+<<<
+
+EY                    Kost Forer Gabbay & Kasierer      Tel: +972-3-6232525 
+                      144 Menachem Begin Road, Building A, Fax: +972-3-5622555 
+Building a better     Tel-Aviv 6492102, Israel          ey.com 
+working world 
+
+                            Auditors' review report to the shareholders of 
+
+                                ALEMIF III REIT HOLDINGS, L.P. 
+
+Introduction 
+
+We have reviewed the accompanying financial information of ALEMIF III REIT Holdings, L.P. ("the 
+Partnership"), which comprises the condensed consolidated statements of financial position as of 
+September 30, 2024, and the related consolidated statements of profit or loss and comprehensive income for 
+the nine and three months periods ended September 30, 2024, and changes in members' capital and cash flows 
+for the nine months period ended September 30, 2024, and the related notes. The Partnerships' board of 
+directors and management are responsible for the preparation and presentation of interim financial information 
+for these periods in conformity with U.S. generally accepted accounting principles. Our responsibility is to 
+express a conclusion on this interim financial information based on our review. 
+
+Scope of review 
+
+We conducted our review in accordance with Review Standard 2410 of the Institute of Certified Public 
+Accountants in Israel, "Review of interim Financial Information Performed by the independent Auditor of the 
+Entity". A review of interim financial information consists of making inquiries, primarily of persons 
+responsible for financial and accounting matters, and applying analytical and other review procedures. A 
+review is substantially less in scope than an audit conducted in accordance with generally accepted auditing 
+standards in Israel and consequently does not enable us to obtain assurance that we would become aware of 
+all significant matters that might be identified in an audit. Accordingly, we do not express an audit opinion. 
+
+Conclusion 
+
+Based on our review nothing has come to our attention that causes us to believe that the accompanying interim 
+financial information is not prepared, in all material respects, in conformity with U.S. generally accepted 
+accounting principles, which differ in certain respects from the IFRS, as describe in Note 6, to the consolidated 
+financial statements. 
+
+ Tel-Aviv, Israel                                              KOST FORER GABBAY & KASIERER 
+ November 24, 2024                                               A Member of Ernst & Young Global 
+
+                                                 -2 - 
+<<<
+
+                                                           ALEMIF III REIT HOLDINGS, L.P. 
+
+CONSOLIDATED OF FINANCIAL POSITION 
+
+                                                              September 30,    December 31, 
+                                                                   2024             2023 
+                                                                Unaudited         Audited 
+                                                      Note        U.S. dollars in thousands 
+
+    ASSETS 
+
+  Real estate, net                                     3         2,187,990      2,228,090 
+  Investments in investees entities                     1          27,964         34,689 
+  Cash                                                              13,960        17,228 
+  Restricted cash                                                  51,274         42,301 
+  Accounts receivable                                               6,521          4,913 
+  Receivables due from related parties                               1,154         1,210 
+  Prepaid Expenses                                                  2,863          1,716 
+
+  Total assets                                                   2,291,727      2,330,147 
+
+    LIABILITIES AND MEMBERS' CAPITAL 
+
+  Real estate mortgages, net                                     1,612,744      1,615,135 
+  Loans payable to related parties, net                4          224,517        225,038 
+  Accounts payable                                                   1,862         1,039 
+  Accrued Expenses                                                 37,876         27,588 
+  Security deposits payable                                          1,170         1,436 
+  Other liabilities                                                  2,444         2,601 
+  Payables due to related parties                                     172            173 
+
+  Total liabilities                                              1,880,785     1,873,010 
+
+    COMMITMENTS AND CONTINGENCIES 
+
+  MEMBERS' CAPITAL: 
+
+  Members' capital                                                410,942        457,137 
+
+  Total liabilities and member's capital                         2,291,727     2,330,147 
+
+The accompanying notes are an integral part of the consolidated financial statements. 
+
+      November 24, 2024 
+     Date of approval of the          Joseph G. Lubeck                James G. Miller 
+      financial statements           Managing Member                     Member 
+
+                                             - 3 - 
+<<<
+
+                                                           ALEMIF III REIT HOLDINGS, L.P. 
+
+CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND COMPREHENSIVE INCOME 
+
+                                                   Nine months ended     Three months ended 
+                                                      September 30,         September 30, 
+                                                     2024       2023       2024       2023 
+                                                        Unaudited            Unaudited 
+                                                             U.S. dollars in thousands 
+ Revenues: 
+
+Rental income                                       191,302   189,176     63,550     63,436 
+
+ Expenses: 
+
+Rental expenses                                      88,945    87,747     29,502     29,668 
+General and administrative expenses                   5,581     6,044      2,045      2,109 
+Depreciation                                         47,633    47,594     15,970      15,626 
+
+ Total expenses                                     142,159   141,385     47,517     47,403 
+
+Partnership's share of loss of entities accounted for at 
+  equity                                             (2,228)       (2)      (310)      (327) 
+
+Income before interest expense - mortgage loans      46,915    47,789     15,723      15,706 
+
+ Interest expense - mortgage loans                   58,729    53,968     17,905      18,343 
+
+Loss before interest to related parties             (11,814)    (6,179)   (5,025)     (2,637) 
+
+Interest expense to related parties - members' loans and 
+related parties' loans                               18,198    18,567      6,108       6,166 
+Interest Income to non-related parties 
+Interest expense to Preferred REIT Investors             15        11          3          4 
+
+ Loss                                               (30,027)   (24,757) (11,136)      (8,807) 
+
+ Attributable to: 
+ Equity holders of the Company                      (27,656)   (24,763)   (9,999)     (8,615) 
+Non-controlling interests                            (2,371)        6     (1,137)      (192) 
+
+ Comprehensive Loss                                 (30,027)   (24,757) (11,136)      (8,807) 
+
+The accompanying notes are an integral part of the consolidated financial statements. 
+
+                                             - 4 - 
+<<<
+
+                                                           ALEMIF III REIT HOLDINGS, L.P. 
+
+CONSOLIDATED STATEMENTS OF CHANGES IN MEMBERS' CAPITAL 
+
+                                                                      Non- 
+                                                      Members'      controlling      Total 
+                                                       capital       interest       capital 
+                                                                    Unaudited 
+                                                             U.S. dollars in thousands 
+
+ Balance as of January 1, 2024 (audited)               185,711        271,426       457,137 
+
+ Members' contributions, net of capital expenses                        1,259         1,259 
+ Members' distributions                                               (17,427)      (17,427) 
+ Net Income (loss)                                      (27,656)       (2,371)      (30,027) 
+
+ Balance as of September 30, 2024 (unaudited)           158,055       252,887       410,942 
+
+                                                                      Non- 
+                                                      Members'      controlling      Total 
+                                                       capital       interest       capital 
+                                                                    Unaudited 
+                                                             U.S. dollars in thousands 
+
+ Balance as of January 1, 2023 (audited)               219,114        290,353       509,467 
+
+ Members' contributions, net of capital expenses                        1,908         1,908 
+ Members' distributions                                               (22,170)      (22,170) 
+ Net Income (loss)                                      (24,763)           6        (24,757) 
+
+ Balance as of September 30, 2023 (unaudited)           194,351       270,097       464,448 
+
+The accompanying notes are an integral part of the financial statements. 
+
+                                             - 5 - 
+<<<
+
+                                                           ALEMIF III REIT HOLDINGS, L.P. 
+
+CONSOLIDATED STATEMENTS OF CASH FLOWS 
+
+                                                                       Nine months ended 
+                                                                          September 30, 
+                                                                       2024          2023 
+                                                                            Unaudited 
+                                                                     US dollars in thousandths 
+
+Cash flows from operating activities: 
+
+  Loss                                                                 (30,027)     (24,757) 
+  Adjustments to reconcile loss to net cash provided by operating activities: 
+  Depreciation                                                          47,633       47,594 
+  Amortization of deferred financing costs, real estate mortgage loans   2,450        2,164 
+  Income of entities accounted for at equity, net                        6,725        1,635 
+  Interest to related parties                                           18,199       18,567 
+  Decrease (Increase)in accounts receivable                             (1,608)      (2,599) 
+  (Decrease) Increase in accounts payable                                  824         (201) 
+  Increase in accrued expenses                                          10,288       11,082 
+  Decrease in security deposits payable                                   (267)        (358) 
+  Increase in other liabilities                                           (156)        (261) 
+  Decrease in receivables due from related parties                          55             1 
+  Decrease in Payables due to related parties                               (1)            I 
+  Increase in prepaid expenses                                          (1,147)        (698) 
+
+  Net cash provided by operating activities                             52,968       52,168 
+
+  Cash flows from investing activities: 
+
+  Purchase of real estate                                                  (14)          (4) 
+  Investments in improvements and equipment                             (7,520)      (9,685) 
+
+  Net cash used in investing activities                                 (7,534)       (9,689) 
+
+The accompanying notes are an integral part of the financial statements. 
+
+                                             - 6 - 
+<<<
+
+                                                           ALEMIF III REIT HOLDINGS, L.P. 
+
+CONSOLIDATED STATEMENTS OF CASH FLOWS 
+
+                                                                       Nine months ended 
+                                                                          September 30, 
+                                                                       2024          2023 
+                                                                            Unaudited 
+                                                                     US dollars in thousandths 
+
+Cash flows from financing activities: 
+
+Repayment of real estate mortgages                                                   12,570 
+Receipt of real estate mortgages                                         1,716 
+Purchase of rate cap                                                     3,124 
+Repayment of long-term loans from related parties                      (18,719)     (23,020) 
+Contribution attributable to non-controlling interests                   1,259        1,908 
+Distribution attributable to non-controlling interests                 (17,427)     (22,170) 
+
+Net cash used in financing activities                                  (39,728)     (30,712) 
+
+  Net (decrease) increase in cash and restricted cash                    5,706       11,767 
+  Cash and restricted cash at the beginning of the period               59,529       53,654 
+
+  Cash and restricted cash at the end of the period                     65,235       65,421 
+
+  Interest paid                                                         18,719       17,779 
+
+The accompanying notes are an integral part of the consolidated financial statements. 
+
+                                             - 7 - 
+<<<
+
+                                                               ALEMIF III REIT HOLDINGS, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 1 :- GENERAL 
+
+            ALEMIF III REIT Holdings, L.P., a Delaware limited partnership, was incorporated on 
+            October 4, 2019 ("the Fund"). The Fund conducts all its operations through consolidated and 
+            investees entities. The Fund is in the business of acquiring and owning a portfolio of quality and 
+            growth potential properties in the southeast of the United States. The Fund's properties are 
+           managed by American Landmark Management ("the Management Company"), a related party of 
+            the Fund. 
+
+            The Fund was formed by the EMIF II Management LLC GP ("the General Partner"), a related 
+            party of the Fund. The ownership rights in the Fund are held by EMIF III - Feeder I, L.P., EMIF 
+            III - Feeder II, L.P., EMIF III - Feeder III, L.P., EMIF III - Feeder IV, L.P., and EMIF III - 
+            Feeder V, L.P. 
+
+            The Fund has closed out commitments for a total amount of US$ 595.5 million as well as an 
+            additional US$ 200.0 million from a leading international investor who has co-invested in the 
+            fund effective July 1, 2020, and US$ 184.7 million from other international investors who have 
+            also co-invested in the fund effective October 1, 2020. According to the Fund's agreements, the 
+            General Partner (along with its related parties) invested a total of US$ 64 million in the Fund. 
+            Moreover, the Fund agreements determine the investment policy and the entitlement to promote 
+           payments to the General Partner and related. 
+
+            As of September 30, 2024, the Fund owns forty-five properties, forty-one properties held through 
+           consolidated entities with an aggregate of 12,199 apartment units, four properties, with an 
+            aggregate of 1,170 apartment units, are held through investee entities in which the Fund does not 
+           have control but rather significant influence. 
+
+            These financial statements have been prepared in a condensed format as of September 30, 2024, 
+            and for the nine and three months then ended ("interim consolidated financial statements"). These 
+            financial statements should be read in conjunction with the Partnership's annual financial 
+            statements as of December 31, 2023, and for the year then ended and the accompanying notes 
+            ("annual consolidated financial statements"). 
+
+NOTE 2:     SIGNIFICANT ACCOUNTING POLICIES 
+
+            Basis of preparation of the interim consolidated financial statements: 
+
+            The significant accounting policies and methods of computation adopted in the preparation of the 
+            interim consolidated financial statements are consistent with those followed in the preparation of 
+            the annual consolidated financial statements. 
+
+                                                - 8 - 
+<<<
+
+                                                             ALEMIF III REIT HOLDINGS, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 2 :- SIGNIFICANT ACCOUNTING POLICIES (Cont.) 
+
+           Cash, cash equivalents and restricted cash are included the following: 
+
+                                                                  Nine months 
+                                                                      ended          Year ended 
+                                                                  September 30,    December 31, 
+                                                                       2024             2023 
+                                                                    Unaudited         Audited 
+                                                                     U.S. dollars in thousands 
+
+            Cash and cash equivalents as reported on the balance sheet 13,960          17,228 
+            Restricted cash as reported on the balance sheet          51,274           42,301 
+
+            Cash, cash equivalents and restricted cash as reported in 
+             statement of cash flow                                   65,234           59,529 
+
+NOTE 3 :- REAL ESTATE, NET 
+
+           a.    Real estate net consisted of the following: 
+
+                                                                September 30,    December 31, 
+                                                                     2024             2023 
+                                                                  Unaudited         Audited 
+                                                                    U.S. dollars in thousands 
+
+                 Land                                             268,654          268,654 
+                 Building, improvements and equipment (1)        2,142,842       2,135,308 
+                 Accumulated depreciation                         (223,505)       (175,871) 
+
+                 Real estate, net                                2,187,991       2,228,090 
+
+                 (1)   Building, improvements, and equipment costs include soft costs in the amount of 
+                       US$ 3.8 million and hard costs in the amount of US$ 84.3 million. Soft costs consist 
+                       of fees incurred to an entity affiliated by common ownership. 
+
+NOTE 4:    LOANS PAYABLE TO RELATED PARTIES 
+
+           As of September 30, 2024, loans payable consists of a total amount of US$ 224.5 million, 
+           US$ 215.6 million consisting of principal and US$ 8.8 million consisting of interest, provided to 
+           the Partnership by EMIF III Feeder I LP, EMIF III Feeder II LP, EMIF III Feeder III LP, EMIF 
+           III Feeder IV LP, and EMIF III Feeder V LP, all are related parties of the Fund. The loans bear 
+           annual interest of 11%. The outstanding balance of the principal of the notes shall be due and 
+           payable, together with accrued and unpaid interest, on the maturity date which was determined as 
+           a period of up to six years and in any event will be repaid no later than the date on which the 
+           proceeds from the asset's realization will be accepted, subject to the Fund's right to prepay the 
+           note principal, at any time, without penalty. 
+
+                                               - 9 - 
+<<<
+
+                                                             ALEMIF III REIT HOLDINGS, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 5:    SUBSEQUENT EVENTS 
+
+           Management has evaluated all events transactions that occurred after September 30, 2024, 
+           through November 24, 2024, the date which the statements were available and issued, and 
+           expected for the above referenced, and noted no items requiring adjustments of the statements or 
+           additional disclosures. 
+
+NOTE 6 :- DIFFERENCES BETWEEN U.S. GAAP AND IFRS 
+
+           The financial statements are prepared in accordance with U.S. GAAP, which differ in certain 
+           respects from IFRS. The differences which affect the balance sheets and statements of operations 
+           relate principally to the following items: 
+
+           a.    Reconciliation of consolidated balance sheets from U.S. GAAP to IFRS: 
+
+                                                              September 30, 2024 
+                                                         As                      As per 
+                                                      reported   Adjustment      IFRS 
+                                                           U.S. dollars in thousands       Note 
+
+                  Real estate, net                    2,187,990     620,123     2,808,114   (1) 
+                  Investments in unconsolidated 
+                    entities- at cost 
+                  Investment In unconsolidated 
+                    Entities                            27,964       27,557      55,521     (2) 
+
+                  Members' capital                     410,942      647,679     1,058,621 
+
+           b.    Reconciliation of consolidated profit or loss from U.S. GAAP to IFRS: 
+
+                                                         Period ended September 30, 2024 
+                                                           As                     As per 
+                                                        reported   Adjustment     IFRS 
+                                                              US dollars in thousands       Note 
+
+                 Depreciation                             (47,633)     47,633                (1) 
+                  Capitalized Costs 
+                  Partnership's share of profit of entities 
+                   accounted for at equity                 (2,227)      6,318       4,090    (2) 
+                 Partnership's share of valuation                     (86,773)    (86,773) 
+
+                  Profit (Loss)                           (30,027)    (32,821)    (62,848) 
+
+                                               - 10 - 
+<<<
+
+                                                                ALEMIF III REIT HOLDINGS, L.P. 
+
+NOTES TO INTERIM CONSOLIDATED FINANCIAL STATEMENTS 
+
+NOTE 6 :- DIFFERENCES BETWEEN U.S. GAAP AND IFRS (Cont.) 
+
+                  (1)   Real estate, net - the investment properties are presented according to their fair value. 
+                        Thus, for the conversion from U.S. GAAP to IFRS, those depreciation expenses are 
+                        eliminated, and the real estate properties are presented according to their fair value. 
+                        In addition, closing costs capitalized and included in the assets carrying value under 
+                        US GAAP are expensed in accordance with IFRS. 
+
+                  (2)   Investment in unconsolidated entities - the depreciation expenses of the real estate 
+                        assets are eliminated, and the real estate properties are presented according to their 
+                        Fair value. In addition, closing costs in association with acquiring the asset are 
+                        expensed under IFRS and therefore eliminated from the carrying value of the asset. 
+                        Thus, the investment in unconsolidated entities and the Partnership's share of profits 
+                        of entities accounted for at equity are adjusted to reflect the elimination of 
+                        depreciation and the addition of closing costs. 
+
+                                                 - 11 - 
+<<<
