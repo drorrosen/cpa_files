@@ -15,9 +15,8 @@ def build_index():
     metadata = {}
     
     # Initialize OpenAI embeddings through LangChain
-    embeddings_model = OpenAIEmbeddings(
-        openai_api_key="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"
-    )
+    embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
+
     
     # Initialize text splitter
     text_splitter = RecursiveCharacterTextSplitter(
