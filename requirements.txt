@@ -7,3 +7,4 @@ pandas
 numpy
 pathlib
 openai 
+langchain_community
