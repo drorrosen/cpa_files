@@ -187,10 +187,9 @@ st.markdown("""
 # API Key Setup
 # ---------------------------
 # TODO: Move these to st.secrets in production
-# OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-# GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-OPENAI_API_KEY = "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"
-GEMINI_API_KEY = "AIzaSyCcmrzZjW2hW_Klb51YcYGmrFdPxQaaf-4"
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+
 
 # Add Gemini import
 import google.generativeai as genai
