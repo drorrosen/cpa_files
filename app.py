@@ -222,11 +222,6 @@ def initialize_vector_store():
     """Initialize or rebuild vector store from scratch each time"""
     print("Starting index building process...")
     
-    # Initialize
-    dimension = 3072
-    index = faiss.IndexFlatL2(dimension)
-    metadata = {}
-    
     # Initialize OpenAI embeddings
     embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
     
@@ -237,59 +232,46 @@ def initialize_vector_store():
         separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
     )
     
-    # Create faiss_index directory if it doesn't exist
-    os.makedirs("faiss_index", exist_ok=True)
-    
     # Process all text files
     texts_dir = Path("extracted_texts")
-    total_files = len(list(texts_dir.glob("*.txt")))
+    texts = []
+    metadatas = []
     
-    print(f"Found {total_files} text files to process")
-    chunk_counter = 0
-    
-    all_chunks = []
-    all_metadata = {}
-    
-    for i, text_file in enumerate(texts_dir.glob("*.txt"), 1):
+    print("Loading documents...")
+    for text_file in texts_dir.glob("*.txt"):
         try:
             with open(text_file, 'r', encoding='utf-8') as f:
                 content = f.read()
             
             # Split content into chunks
             chunks = text_splitter.split_text(content)
+            texts.extend(chunks)
             
-            for chunk_idx, chunk in enumerate(chunks):
-                try:
-                    # Get embeddings for each chunk
-                    embedding = embeddings_model.embed_query(chunk)
-                    
-                    # Add to index
-                    index.add(np.array([embedding]).astype('float32'))
-                    
-                    # Store metadata
-                    metadata[str(chunk_counter)] = {
-                        "filename": text_file.name,
-                        "chunk_index": chunk_idx,
-                        "content": chunk,
-                        "total_chunks": len(chunks)
-                    }
-                    chunk_counter += 1
-                    
-                except Exception as e:
-                    print(f"Error processing chunk {chunk_idx} of {text_file.name}: {str(e)}")
-                    continue
+            # Add metadata for each chunk
+            for chunk_idx in range(len(chunks)):
+                metadatas.append({
+                    "filename": text_file.name,
+                    "chunk_index": chunk_idx,
+                    "total_chunks": len(chunks)
+                })
             
         except Exception as e:
             print(f"Error processing file {text_file.name}: {str(e)}")
             continue
     
-    # Save everything
-    faiss.write_index(index, "faiss_index/document_index.faiss")
-    with open("faiss_index/metadata.json", 'w', encoding='utf-8') as f:
-        json.dump(metadata, f, ensure_ascii=False)
+    print(f"Creating FAISS index from {len(texts)} text chunks...")
     
-    # Create and return the FAISS vector store
-    vector_store = FAISS(embeddings_model.embed_query, index, metadata)
+    # Create FAISS index from texts
+    vector_store = FAISS.from_texts(
+        texts=texts,
+        embedding=embeddings_model,
+        metadatas=metadatas
+    )
+    
+    # Save the index
+    vector_store.save_local("faiss_index")
+    print("Vector store saved successfully!")
+    
     return vector_store
 
 # Initialize components
