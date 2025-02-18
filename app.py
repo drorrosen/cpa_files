@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 import pandas as pd
 import google.generativeai as genai
@@ -212,7 +212,6 @@ def initialize_embeddings():
 
 def initialize_vector_store():
     """Initialize or rebuild vector store from scratch each time."""
-    # Debug prints to confirm environment and files
     st.write("Current working directory:", os.getcwd())
     st.write("Files in root:", os.listdir('.'))
     try:
@@ -261,8 +260,11 @@ def initialize_vector_store():
     
     return vector_store
 
-# Force a rebuild if 'vector_store' not in session_state OR if URL has ?rebuild=true
-if 'vector_store' not in st.session_state or st.experimental_get_query_params().get("rebuild", None):
+# Get current query parameters
+params = st.query_params
+
+# Force a rebuild if 'vector_store' not in st.session_state or 'rebuild' param is present
+if 'vector_store' not in st.session_state or 'rebuild' in params:
     try:
         with st.status("Building vector store..."):
             st.session_state.vector_store = initialize_vector_store()
@@ -327,7 +329,6 @@ def display_formatted_response(answer):
         st.markdown(answer)
 
 def get_specialized_prompt(question, context):
-    # If question contains specific keywords, use a table-friendly prompt
     if any(word in question.lower() for word in ['מאזן', 'טבלה', 'השוואה', 'נתונים']):
         return f"""
         You are a financial data analyst. Create a clear, structured response:
