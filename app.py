@@ -218,95 +218,85 @@ def initialize_embeddings():
     return OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"]
 )
 
-@st.cache_resource
-def load_all_documents():
-    all_text = ""
-    extracted_dir = "extracted_texts"
-    
-    # Add a status message while loading
-    with st.spinner('Loading documents...'):
-        for filename in os.listdir(extracted_dir):
-            if filename.endswith('.txt'):
-                file_path = os.path.join(extracted_dir, filename)
-                try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignore") as file:
-                        text = file.read()
-                        # Add document identifier and separator
-                        all_text += f"\n\n=== Document: {filename} ===\n\n{text}\n\n"
-                except UnicodeDecodeError:
-                    with open(file_path, "r", encoding="latin-1") as file:
-                        text = file.read()
-                        # Add document identifier and separator
-                        all_text += f"\n\n=== Document: {filename} ===\n\n{text}\n\n"
-    
-    return all_text
-
-@st.cache_resource
-def create_vector_store(_embeddings_model, document_text):
-    # Increase chunk size and overlap for better context
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=100000,
-        chunk_overlap=20000,
-        separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
-    )
-    document_chunks = splitter.create_documents([document_text])
-    return FAISS.from_documents(document_chunks, _embeddings_model)
-
-@st.cache_resource
-def get_files_hash():
-    """Get a hash of all files in extracted_texts directory"""
-    files = []
-    extracted_dir = "extracted_texts"
-    for filename in os.listdir(extracted_dir):
-        if filename.endswith('.txt'):
-            file_path = os.path.join(extracted_dir, filename)
-            with open(file_path, 'rb') as f:
-                files.append((filename, hash(f.read())))
-    return hash(tuple(sorted(files)))
-
-@st.cache_resource
 def initialize_vector_store():
-    """Initialize or rebuild vector store if files have changed"""
-    files_hash = get_files_hash()
+    """Initialize or rebuild vector store from scratch each time"""
+    print("Starting index building process...")
     
-    # Load documents
-    all_text = load_all_documents()
+    # Initialize
+    dimension = 3072
+    index = faiss.IndexFlatL2(dimension)
+    metadata = {}
     
-    # Initialize embeddings
+    # Initialize OpenAI embeddings
     embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
     
-    # Create vector store
-    splitter = RecursiveCharacterTextSplitter(
+    # Initialize text splitter
+    text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=200000,
         chunk_overlap=50000,
         separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
     )
-    document_chunks = splitter.create_documents([all_text])
     
-    # Create and save vector store
-    vector_store = FAISS.from_documents(document_chunks, embeddings_model)
+    # Create faiss_index directory if it doesn't exist
+    os.makedirs("faiss_index", exist_ok=True)
     
-    # Save to disk
-    vector_store.save_local("faiss_index")
+    # Process all text files
+    texts_dir = Path("extracted_texts")
+    total_files = len(list(texts_dir.glob("*.txt")))
     
-    return vector_store, files_hash
+    print(f"Found {total_files} text files to process")
+    chunk_counter = 0
+    
+    all_chunks = []
+    all_metadata = {}
+    
+    for i, text_file in enumerate(texts_dir.glob("*.txt"), 1):
+        try:
+            with open(text_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Split content into chunks
+            chunks = text_splitter.split_text(content)
+            
+            for chunk_idx, chunk in enumerate(chunks):
+                try:
+                    # Get embeddings for each chunk
+                    embedding = embeddings_model.embed_query(chunk)
+                    
+                    # Add to index
+                    index.add(np.array([embedding]).astype('float32'))
+                    
+                    # Store metadata
+                    metadata[str(chunk_counter)] = {
+                        "filename": text_file.name,
+                        "chunk_index": chunk_idx,
+                        "content": chunk,
+                        "total_chunks": len(chunks)
+                    }
+                    chunk_counter += 1
+                    
+                except Exception as e:
+                    print(f"Error processing chunk {chunk_idx} of {text_file.name}: {str(e)}")
+                    continue
+            
+        except Exception as e:
+            print(f"Error processing file {text_file.name}: {str(e)}")
+            continue
+    
+    # Save everything
+    faiss.write_index(index, "faiss_index/document_index.faiss")
+    with open("faiss_index/metadata.json", 'w', encoding='utf-8') as f:
+        json.dump(metadata, f, ensure_ascii=False)
+    
+    # Create and return the FAISS vector store
+    vector_store = FAISS(embeddings_model.embed_query, index, metadata)
+    return vector_store
 
 # Initialize components
 try:
-    with st.spinner("Checking for document updates..."):
-        if 'files_hash' not in st.session_state:
-            with st.status("Building initial vector store..."):
-                st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
-                st.success("Initial vector store built successfully!")
-        else:
-            current_hash = get_files_hash()
-            if current_hash != st.session_state.files_hash:
-                with st.status("Rebuilding vector store for updated documents..."):
-                    st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
-                    st.success("Vector store rebuilt successfully!")
-    
-    vector_store = st.session_state.vector_store
-
+    with st.status("Building vector store..."):
+        vector_store = initialize_vector_store()
+        st.success("Vector store built successfully!")
 except Exception as e:
     st.error(f"Error initializing vector store: {str(e)}")
 
