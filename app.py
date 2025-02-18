@@ -251,10 +251,60 @@ def create_vector_store(_embeddings_model, document_text):
     document_chunks = splitter.create_documents([document_text])
     return FAISS.from_documents(document_chunks, _embeddings_model)
 
+@st.cache_resource
+def get_files_hash():
+    """Get a hash of all files in extracted_texts directory"""
+    files = []
+    extracted_dir = "extracted_texts"
+    for filename in os.listdir(extracted_dir):
+        if filename.endswith('.txt'):
+            file_path = os.path.join(extracted_dir, filename)
+            with open(file_path, 'rb') as f:
+                files.append((filename, hash(f.read())))
+    return hash(tuple(sorted(files)))
+
+@st.cache_resource
+def initialize_vector_store():
+    """Initialize or rebuild vector store if files have changed"""
+    files_hash = get_files_hash()
+    
+    # Load documents
+    all_text = load_all_documents()
+    
+    # Initialize embeddings
+    embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
+    
+    # Create vector store
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=200000,
+        chunk_overlap=50000,
+        separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
+    )
+    document_chunks = splitter.create_documents([all_text])
+    
+    # Create and save vector store
+    vector_store = FAISS.from_documents(document_chunks, embeddings_model)
+    
+    # Save to disk
+    vector_store.save_local("faiss_index")
+    
+    return vector_store, files_hash
+
 # Initialize components
-embeddings_model = initialize_embeddings()
-document_text = load_all_documents()
-vector_store = create_vector_store(embeddings_model, document_text)
+try:
+    if 'files_hash' not in st.session_state:
+        st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
+    else:
+        current_hash = get_files_hash()
+        if current_hash != st.session_state.files_hash:
+            st.info("Detected new or modified files. Rebuilding vector store...")
+            st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
+            st.success("Vector store rebuilt successfully!")
+    
+    vector_store = st.session_state.vector_store
+
+except Exception as e:
+    st.error(f"Error initializing vector store: {str(e)}")
 
 # ---------------------------
 # Define helper functions first
