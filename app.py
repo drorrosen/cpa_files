@@ -218,13 +218,10 @@ def initialize_embeddings():
     return OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"]
 )
 
-# ---------------------------
-# Initialize Vector Store (No Caching)
-# ---------------------------
 def initialize_vector_store():
-    """Initialize or rebuild vector store from scratch each time the app is loaded."""
+    """Initialize or rebuild vector store from scratch each time"""
     print("Starting index building process...")
-
+    
     # Initialize OpenAI embeddings
     embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
     
@@ -234,54 +231,56 @@ def initialize_vector_store():
         chunk_overlap=50000,
         separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
     )
-
+    
+    # Process all text files
     texts_dir = Path("extracted_texts")
     texts = []
     metadatas = []
-
+    
     print("Loading documents...")
     for text_file in texts_dir.glob("*.txt"):
         try:
             with open(text_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-
-            # Split into chunks
+            
+            # Split content into chunks
             chunks = text_splitter.split_text(content)
             texts.extend(chunks)
-
-            # Store metadata
-            for chunk_idx, _ in enumerate(chunks):
+            
+            # Add metadata for each chunk
+            for chunk_idx in range(len(chunks)):
                 metadatas.append({
                     "filename": text_file.name,
                     "chunk_index": chunk_idx,
                     "total_chunks": len(chunks)
                 })
-
+            
         except Exception as e:
             print(f"Error processing file {text_file.name}: {str(e)}")
             continue
-
+    
     print(f"Creating FAISS index from {len(texts)} text chunks...")
-
+    
     # Create FAISS index from texts
     vector_store = FAISS.from_texts(
         texts=texts,
         embedding=embeddings_model,
         metadatas=metadatas
     )
-    print("Vector store built successfully!")
+    
     return vector_store
 
-# ---------------------------
-# Build the index on app load
-# ---------------------------
-try:
-    # Optionally show a spinner
-    with st.spinner("Building vector store..."):
-        vector_store = initialize_vector_store()
-    st.success("Vector store rebuilt successfully!")
-except Exception as e:
-    st.error(f"Error initializing vector store: {str(e)}")
+# Add this near the top of your app, after imports
+if 'vector_store' not in st.session_state:
+    try:
+        with st.status("Building vector store..."):
+            st.session_state.vector_store = initialize_vector_store()
+            st.success("Vector store built successfully!")
+    except Exception as e:
+        st.error(f"Error initializing vector store: {str(e)}")
+
+# Use the stored vector store for queries
+vector_store = st.session_state.vector_store
 
 # ---------------------------
 # Define helper functions first
