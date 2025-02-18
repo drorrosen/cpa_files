@@ -68,16 +68,16 @@ st.markdown("""
     
     .stChatMessage.user {
         background: rgba(56, 189, 248, 0.1) !important;
-        border-right: 4px solid #38BDF8 !important;  /* Changed from left to right */
+        border-right: 4px solid #38BDF8 !important;
         border-left: none !important;
-        margin-left: 100px !important;  /* Added margin to shift messages */
+        margin-left: 100px !important;
     }
     
     .stChatMessage.assistant {
         background: rgba(129, 140, 248, 0.1) !important;
-        border-right: 4px solid #818CF8 !important;  /* Changed from left to right */
+        border-right: 4px solid #818CF8 !important;
         border-left: none !important;
-        margin-right: 100px !important;  /* Added margin to shift messages */
+        margin-right: 100px !important;
     }
     
     /* Chat input with RTL support */
@@ -101,7 +101,6 @@ st.markdown("""
         color: #94A3B8 !important;
     }
     
-    /* Style for the input text */
     .stChatInput input {
         color: #1E293B !important;
         font-size: 1.1em !important;
@@ -137,11 +136,11 @@ st.markdown("""
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        text-align: center !important;  /* Center the header content */
+        text-align: center !important;
     }
     
     .header-container h1, .header-container p {
-        text-align: center !important;  /* Force center alignment for header text */
+        text-align: center !important;
         direction: rtl !important;
     }
     
@@ -191,14 +190,10 @@ st.markdown("""
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
-
-# Add Gemini import
+# Gemini setup
 import google.generativeai as genai
-
-# Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 
-# Create Gemini model configuration
 generation_config = {
     "temperature": 0.0,
     "top_p": 0.5,
@@ -206,8 +201,6 @@ generation_config = {
     "max_output_tokens": 8192,
     "response_mime_type": "text/plain",
 }
-
-# Initialize Gemini model
 gemini_model = genai.GenerativeModel(
     model_name="gemini-2.0-pro-exp-02-05",
     generation_config=generation_config,
@@ -215,53 +208,51 @@ gemini_model = genai.GenerativeModel(
 
 @st.cache_resource
 def initialize_embeddings():
-    return OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"]
-)
+    return OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 def initialize_vector_store():
-    """Initialize or rebuild vector store from scratch each time"""
-    print("Starting index building process...")
+    """Initialize or rebuild vector store from scratch each time."""
+    # Debug prints to confirm environment and files
+    st.write("Current working directory:", os.getcwd())
+    st.write("Files in root:", os.listdir('.'))
+    try:
+        st.write("extracted_texts folder contents:", os.listdir('extracted_texts'))
+    except FileNotFoundError:
+        st.write("No 'extracted_texts' folder found!")
+
+    st.write("Starting index building process...")
+
+    embeddings_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
     
-    # Initialize OpenAI embeddings
-    embeddings_model = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
-    
-    # Initialize text splitter
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=200000,
         chunk_overlap=50000,
         separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
     )
     
-    # Process all text files
     texts_dir = Path("extracted_texts")
     texts = []
     metadatas = []
     
-    print("Loading documents...")
+    st.write("Loading documents...")
     for text_file in texts_dir.glob("*.txt"):
         try:
             with open(text_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-            
-            # Split content into chunks
             chunks = text_splitter.split_text(content)
             texts.extend(chunks)
             
-            # Add metadata for each chunk
             for chunk_idx in range(len(chunks)):
                 metadatas.append({
                     "filename": text_file.name,
                     "chunk_index": chunk_idx,
                     "total_chunks": len(chunks)
                 })
-            
         except Exception as e:
-            print(f"Error processing file {text_file.name}: {str(e)}")
+            st.write(f"Error processing file {text_file.name}: {str(e)}")
             continue
     
-    print(f"Creating FAISS index from {len(texts)} text chunks...")
-    
-    # Create FAISS index from texts
+    st.write(f"Creating FAISS index from {len(texts)} text chunks...")
     vector_store = FAISS.from_texts(
         texts=texts,
         embedding=embeddings_model,
@@ -270,8 +261,8 @@ def initialize_vector_store():
     
     return vector_store
 
-# Add this near the top of your app, after imports
-if 'vector_store' not in st.session_state:
+# Force a rebuild if 'vector_store' not in session_state OR if URL has ?rebuild=true
+if 'vector_store' not in st.session_state or st.experimental_get_query_params().get("rebuild", None):
     try:
         with st.status("Building vector store..."):
             st.session_state.vector_store = initialize_vector_store()
@@ -283,33 +274,28 @@ if 'vector_store' not in st.session_state:
 vector_store = st.session_state.vector_store
 
 # ---------------------------
-# Define helper functions first
+# Helper functions
 # ---------------------------
 def display_formatted_response(answer):
-    # Check if the response contains a table
     if "|" in answer and "-|-" in answer:
-        # Split the response into explanation and table parts
         parts = answer.split("\n\n")
         explanation = parts[0]
         table_text = "\n".join([p for p in parts if "|" in p])
         
-        # Display the explanation
         st.markdown(explanation)
         
         # Convert markdown table to DataFrame
         try:
-            # Parse the markdown table
             lines = [line.strip() for line in table_text.split('\n') if line.strip()]
             headers = [col.strip() for col in lines[0].split('|') if col.strip()]
             data = []
-            for line in lines[2:]:  # Skip the separator line
+            for line in lines[2:]:  # skip the separator line
                 row = [cell.strip() for cell in line.split('|') if cell.strip()]
                 data.append(row)
             
-            # Create DataFrame
             df = pd.DataFrame(data, columns=headers)
             
-            # Display as a styled table
+            # Display styled table
             st.markdown("""
                 <style>
                     .dataframe {
@@ -336,12 +322,12 @@ def display_formatted_response(answer):
             """, unsafe_allow_html=True)
             st.dataframe(df, use_container_width=True)
         except Exception as e:
-            st.markdown(answer)  # Fallback to regular markdown if table parsing fails
+            st.markdown(answer)  # fallback to regular markdown if parsing fails
     else:
         st.markdown(answer)
 
 def get_specialized_prompt(question, context):
-    # Add document source information to the prompt
+    # If question contains specific keywords, use a table-friendly prompt
     if any(word in question.lower() for word in ['מאזן', 'טבלה', 'השוואה', 'נתונים']):
         return f"""
         You are a financial data analyst. Create a clear, structured response:
@@ -362,7 +348,7 @@ def get_specialized_prompt(question, context):
         - Format numbers with commas
         - Show percentages with % symbol
         - Use clear section headers
-        
+
         Context: {context}
         Question: {question}
         """
@@ -374,10 +360,10 @@ def get_specialized_prompt(question, context):
         3. Bold for important values
         4. Clear sections if needed
         5. In the hebrew language and organize it.
-        
+
         Context: {context}
         Question: {question}
-        
+
         Make the answer clear and well-structured.
         """
 
@@ -404,16 +390,7 @@ if prompt := st.chat_input("Ask a question about your document..."):
         
         full_prompt = get_specialized_prompt(prompt, context)
         
-        # Comment out the old OpenAI model
-        # chat_model = ChatOpenAI(
-        #     model_name="gpt-4o",
-        #     openai_api_key=OPENAI_API_KEY,
-        #     max_tokens=10000
-        # )
-        # response = chat_model.invoke(full_prompt)
-        # answer = response.content
-        
-        # Use Gemini model instead
+        # Use Gemini model
         chat_session = gemini_model.start_chat(history=[])
         response = chat_session.send_message(full_prompt)
         answer = response.text
@@ -425,6 +402,6 @@ if prompt := st.chat_input("Ask a question about your document..."):
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
 
-# Add a footer
+# Footer
 st.markdown("---")
-st.markdown("*Powered by OpenAI and FAISS*") 
+st.markdown("*Powered by OpenAI and FAISS*")
