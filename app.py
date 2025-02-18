@@ -9,6 +9,7 @@ import faiss
 import numpy as np
 from pathlib import Path
 import json
+import openai
 
 # ---------------------------
 # Page Configuration
@@ -202,7 +203,7 @@ generation_config = {
     "temperature": 0.0,
     "top_p": 0.5,
     "top_k": 20,
-    "max_output_tokens": 12000,
+    "max_output_tokens": 8192,
     "response_mime_type": "text/plain",
 }
 
@@ -292,14 +293,17 @@ def initialize_vector_store():
 
 # Initialize components
 try:
-    if 'files_hash' not in st.session_state:
-        st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
-    else:
-        current_hash = get_files_hash()
-        if current_hash != st.session_state.files_hash:
-            st.info("Detected new or modified files. Rebuilding vector store...")
-            st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
-            st.success("Vector store rebuilt successfully!")
+    with st.spinner("Checking for document updates..."):
+        if 'files_hash' not in st.session_state:
+            with st.status("Building initial vector store..."):
+                st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
+                st.success("Initial vector store built successfully!")
+        else:
+            current_hash = get_files_hash()
+            if current_hash != st.session_state.files_hash:
+                with st.status("Rebuilding vector store for updated documents..."):
+                    st.session_state.vector_store, st.session_state.files_hash = initialize_vector_store()
+                    st.success("Vector store rebuilt successfully!")
     
     vector_store = st.session_state.vector_store
 
@@ -451,40 +455,4 @@ if prompt := st.chat_input("Ask a question about your document..."):
 
 # Add a footer
 st.markdown("---")
-st.markdown("*Powered by OpenAI and FAISS*")
-
-# ---------------------------
-# Initialize FAISS
-# ---------------------------
-@st.cache_resource  # This keeps the index in memory between reruns
-def initialize_faiss():
-    dimension = 3072  # for text-embedding-3-large
-    try:
-        # Look for pre-built index in the repository
-        index_path = Path(__file__).parent / "faiss_index" / "document_index.faiss"
-        if index_path.exists():
-            index = faiss.read_index(str(index_path))
-            print("Successfully loaded pre-built FAISS index")
-            return index
-        else:
-            print("No pre-built index found, creating new one")
-            return faiss.IndexFlatL2(dimension)
-    except Exception as e:
-        print(f"Error loading index: {e}")
-        return faiss.IndexFlatL2(dimension)
-
-# Store the index in the repository
-faiss_index_dir = Path(__file__).parent / "faiss_index"
-faiss_index_dir.mkdir(exist_ok=True)
-
-def save_index(index, metadata):
-    try:
-        # Save FAISS index
-        faiss.write_index(index, str(faiss_index_dir / "document_index.faiss"))
-        
-        # Save metadata
-        with open(faiss_index_dir / "metadata.json", 'w') as f:
-            json.dump(metadata, f)
-        print("Successfully saved index and metadata")
-    except Exception as e:
-        print(f"Error saving index: {e}") 
+st.markdown("*Powered by OpenAI and FAISS*") 
