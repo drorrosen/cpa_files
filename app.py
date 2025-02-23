@@ -251,11 +251,14 @@ def initialize_vector_store():
         model="text-embedding-3-large"
     )
     
-    # Initialize Pinecone
-    import pinecone
-    pinecone.init(
-        api_key=PINECONE_API_KEY,
-        environment=PINECONE_ENVIRONMENT
+    # Initialize Pinecone with new SDK syntax
+    from pinecone import Pinecone
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    
+    # Get the index
+    index = pc.Index(
+        "index",
+        host="index-fmrj1el.svc.aped-4627-b74a.pinecone.io"
     )
     
     return Pinecone.from_existing_index(
