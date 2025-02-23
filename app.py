@@ -200,6 +200,40 @@ st.markdown("""
         color: #64748B;
         font-size: 0.9em;
     }
+    
+    /* Sidebar Styling */
+    .sidebar-content {
+        background: rgba(0, 0, 0, 0.8) !important;
+        padding: 20px !important;
+        border-radius: 10px !important;
+        margin: 10px !important;
+    }
+    
+    /* Sidebar text */
+    .sidebar .sidebar-content [data-testid="stMarkdownContainer"] {
+        color: white !important;
+    }
+    
+    /* Sidebar button */
+    .stButton > button {
+        background-color: #38BDF8 !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Document list items */
+    .document-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin: 5px 0;
+        border-left: 3px solid #38BDF8;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -399,9 +433,11 @@ for message in st.session_state.messages:
 if st.sidebar.button("הצג מסמכים זמינים"):
     documents = get_available_documents()
     if isinstance(documents, list):
-        st.sidebar.write("מסמכים זמינים:")
+        st.sidebar.markdown('<div class="sidebar-content">', unsafe_allow_html=True)
+        st.sidebar.markdown("<h3 style='color: white;'>מסמכים זמינים:</h3>", unsafe_allow_html=True)
         for doc in documents:
-            st.sidebar.write(f"📄 {doc}")
+            st.sidebar.markdown(f'<div class="document-item">📄 {doc}</div>', unsafe_allow_html=True)
+        st.sidebar.markdown('</div>', unsafe_allow_html=True)
     else:
         st.sidebar.error(documents)
 
