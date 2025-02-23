@@ -251,11 +251,21 @@ def initialize_vector_store():
         model="text-embedding-3-large"
     )
     
+    # Initialize Pinecone client first
+    pc = Pinecone(
+        api_key=PINECONE_API_KEY,
+    )
+    
+    # Get the index
+    index = pc.Index(
+        "index",
+        host="index-fmrj1el.svc.aped-4627-b74a.pinecone.io"
+    )
+    
     return Pinecone.from_existing_index(
         index_name="index",
         embedding=embeddings_model,
-        namespace="Default",
-        host="index-fmrj1el.svc.aped-4627-b74a.pinecone.io"
+        namespace="Default"
     )
 
 @st.cache_data
