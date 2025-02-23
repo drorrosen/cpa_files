@@ -1,15 +1,11 @@
 import os
 import streamlit as st
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-import pandas as pd
+from langchain_pinecone import Pinecone
 import google.generativeai as genai
-import faiss
-import numpy as np
-from pathlib import Path
-import json
-import openai
+from typing import List
+from langchain.docstore.document import Document
+import pandas as pd
 
 # ---------------------------
 # Page Configuration
@@ -21,30 +17,27 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Custom CSS Styling - Modern Dark Theme with RTL Support
+# Enhanced Custom CSS Styling
 # ---------------------------
 st.markdown("""
 <style>
     /* RTL Layout */
-    body {
-        direction: rtl !important;
+    body { 
+        direction: rtl !important; 
+        font-family: 'Heebo', sans-serif;
     }
     
+    /* Main background - Enhanced gradient */
+    .stApp {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    }
+    
+    /* Text and Typography */
     .stMarkdown, p, h1, h2, h3, .stChatMessage {
         text-align: right !important;
         direction: rtl !important;
-    }
-    
-    /* Main background - Dark gradient */
-    .stApp {
-        background: linear-gradient(to bottom left, #0F172A, #1E293B);
-    }
-    
-    /* Text colors and typography */
-    .stMarkdown, p {
         color: #E2E8F0 !important;
         line-height: 1.7 !important;
-        font-family: 'Inter', sans-serif;
     }
     
     h1, h2, h3 {
@@ -55,101 +48,114 @@ st.markdown("""
         letter-spacing: -1px;
     }
     
-    /* Chat messages with RTL support */
+    /* Enhanced Chat Messages */
     .stChatMessage {
-        padding: 20px;
+        padding: 1.5rem;
         border-radius: 16px;
-        margin: 20px 0;
+        margin: 1.5rem 0;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .stChatMessage:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
     }
     
     .stChatMessage.user {
         background: rgba(56, 189, 248, 0.1) !important;
         border-right: 4px solid #38BDF8 !important;
-        border-left: none !important;
         margin-left: 100px !important;
     }
     
     .stChatMessage.assistant {
         background: rgba(129, 140, 248, 0.1) !important;
         border-right: 4px solid #818CF8 !important;
-        border-left: none !important;
         margin-right: 100px !important;
     }
     
-    /* Chat input with RTL support */
-    .stChatInput {
-        background: #FFFFFF !important;
-        border: 2px solid rgba(56, 189, 248, 0.3) !important;
+    /* Enhanced Chat Input */
+    .stTextInput > div > div {
+        background: rgba(255, 255, 255, 0.05) !important;
         border-radius: 12px !important;
-        padding: 12px 20px !important;
-        color: #1E293B !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-        text-align: right !important;
-        direction: rtl !important;
+        border: 2px solid rgba(56, 189, 248, 0.3) !important;
+        padding: 0.75rem !important;
+        transition: all 0.3s ease;
     }
     
-    .stChatInput:focus {
+    .stTextInput > div > div:hover {
         border-color: #38BDF8 !important;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
     }
     
-    .stChatInput::placeholder {
-        color: #94A3B8 !important;
+    .stTextInput > div > div:focus-within {
+        border-color: #818CF8 !important;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.2) !important;
     }
     
-    .stChatInput input {
-        color: #1E293B !important;
-        font-size: 1.1em !important;
+    /* Tables */
+    .dataframe {
+        direction: rtl;
+        width: 100%;
+        margin: 1.5rem 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dataframe th {
+        background: linear-gradient(90deg, #1a365d, #2d4a7c);
+        color: white;
+        padding: 1rem;
         text-align: right !important;
-        direction: rtl !important;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     }
     
-    /* Success message */
+    .dataframe td {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 0.75rem;
+        text-align: right !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .dataframe tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .dataframe tr:hover td {
+        background-color: rgba(255, 255, 255, 0.08);
+        transition: background-color 0.3s ease;
+    }
+    
+    /* Source Citations */
+    .source-citation {
+        background: rgba(56, 189, 248, 0.1);
+        border-right: 3px solid #38BDF8;
+        padding: 0.75rem 1rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        font-size: 0.9em;
+    }
+    
+    /* Status Messages */
     .stSuccess {
         background: rgba(16, 185, 129, 0.2) !important;
-        border-left: 4px solid #10B981 !important;
-        color: #E2E8F0 !important;
+        border: 1px solid rgba(16, 185, 129, 0.3) !important;
         border-radius: 8px !important;
-        padding: 20px !important;
+        padding: 1rem !important;
     }
     
-    /* Error message */
     .stError {
         background: rgba(239, 68, 68, 0.2) !important;
-        border-left: 4px solid #EF4444 !important;
-        color: #E2E8F0 !important;
+        border: 1px solid rgba(239, 68, 68, 0.3) !important;
         border-radius: 8px !important;
-        padding: 20px !important;
-    }
-    
-    /* Header container with centered title */
-    .header-container {
-        background: rgba(30, 41, 59, 0.6);
-        padding: 40px;
-        border-radius: 24px;
-        margin: 20px 0 40px 0;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        text-align: center !important;
-    }
-    
-    .header-container h1, .header-container p {
-        text-align: center !important;
-        direction: rtl !important;
-    }
-    
-    /* Footer */
-    footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-top: 20px;
-        color: #64748B !important;
-        font-size: 0.9em;
+        padding: 1rem !important;
     }
     
     /* Scrollbar */
@@ -160,249 +166,237 @@ st.markdown("""
     
     ::-webkit-scrollbar-track {
         background: rgba(30, 41, 59, 0.2);
+        border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: #38BDF8;
+        background: linear-gradient(45deg, #38BDF8, #818CF8);
         border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: #818CF8;
+        background: linear-gradient(45deg, #818CF8, #38BDF8);
+    }
+    
+    /* Header Container */
+    .header-container {
+        background: rgba(30, 41, 59, 0.6);
+        padding: 2.5rem;
+        border-radius: 24px;
+        margin: 1.5rem 0 3rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+    
+    /* Footer */
+    .footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        color: #64748B;
+        font-size: 0.9em;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# Header with centered title
+# Enhanced Header
 # ---------------------------
 st.markdown("""
 <div class="header-container">
-    <h1 style="text-align: center; margin-bottom: 15px; font-size: 2.5em;">🤖 CPA AI Assistant</h1>
-    <p style="text-align: center; font-size: 1.2em; color: #94A3B8;">Unlock the power of your documents with AI</p>
+    <h1>🤖 CPA AI Assistant</h1>
+    <p style="font-size: 1.2em; color: #94A3B8; margin-top: 1rem;">חכמת המסמכים הפיננסיים שלך</p>
 </div>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# API Key Setup
+# Initialize Services
 # ---------------------------
-# TODO: Move these to st.secrets in production
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-
-# Gemini setup
-import google.generativeai as genai
-genai.configure(api_key=GEMINI_API_KEY)
-
-generation_config = {
-    "temperature": 0.0,
-    "top_p": 0.5,
-    "top_k": 20,
-    "max_output_tokens": 8192,
-    "response_mime_type": "text/plain",
-}
-gemini_model = genai.GenerativeModel(
-    model_name="gemini-2.0-pro-exp-02-05",
-    generation_config=generation_config,
-)
+@st.cache_resource
+def initialize_gemini():
+    """Initialize Gemini model"""
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+    generation_config = {
+        "temperature": 0.0,
+        "top_p": 0.5,
+        "top_k": 20,
+        "max_output_tokens": 8192,
+    }
+    return genai.GenerativeModel(
+        model_name="gemini-2.0-pro-exp-02-05",
+        generation_config=generation_config,
+    )
 
 @st.cache_resource
-def initialize_embeddings():
-    return OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-
 def initialize_vector_store():
-    """Initialize or rebuild vector store from scratch each time."""
-    st.write("Current working directory:", os.getcwd())
-    st.write("Files in root:", os.listdir('.'))
-    try:
-        st.write("extracted_texts folder contents:", os.listdir('extracted_texts'))
-    except FileNotFoundError:
-        st.write("No 'extracted_texts' folder found!")
-
-    st.write("Starting index building process...")
-
-    embeddings_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-    
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=200000,
-        chunk_overlap=50000,
-        separators=["\n\n=== Document:", "\n\n", "\n", " ", ""]
+    """Initialize Pinecone vector store"""
+    embeddings_model = OpenAIEmbeddings(
+        openai_api_key=st.secrets["OPENAI_API_KEY"],
+        model="text-embedding-3-large"
     )
     
-    texts_dir = Path("extracted_texts")
-    texts = []
-    metadatas = []
-    
-    st.write("Loading documents...")
-    for text_file in texts_dir.glob("*.txt"):
-        try:
-            with open(text_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-            chunks = text_splitter.split_text(content)
-            texts.extend(chunks)
-            
-            for chunk_idx in range(len(chunks)):
-                metadatas.append({
-                    "filename": text_file.name,
-                    "chunk_index": chunk_idx,
-                    "total_chunks": len(chunks)
-                })
-        except Exception as e:
-            st.write(f"Error processing file {text_file.name}: {str(e)}")
-            continue
-    
-    st.write(f"Creating FAISS index from {len(texts)} text chunks...")
-    vector_store = FAISS.from_texts(
-        texts=texts,
+    return Pinecone.from_existing_index(
+        index_name="index",
         embedding=embeddings_model,
-        metadatas=metadatas
+        namespace="Default"
     )
+
+def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.7, k: int = 5) -> List[Document]:
+    """Get relevant documents with similarity scores above threshold"""
+    results = vector_store.similarity_search_with_score(query, k=k)
     
-    return vector_store
+    # Filter results above threshold and sort by score
+    filtered_results = [(doc, score) for doc, score in results if score >= score_threshold]
+    filtered_results.sort(key=lambda x: x[1], reverse=True)
+    
+    # Return top 3 matches
+    return [doc for doc, _ in filtered_results[:3]]
 
-# Get current query parameters
-params = st.query_params
+def format_source_info(doc: Document) -> str:
+    """Format document source information"""
+    source = doc.metadata.get('source', 'Unknown source')
+    page = doc.metadata.get('page', 'N/A')
+    return f"מסמך: {source} (עמוד {page})"
 
-# Force a rebuild if 'vector_store' not in st.session_state or 'rebuild' param is present
-if 'vector_store' not in st.session_state or 'rebuild' in params:
-    try:
-        with st.status("Building vector store..."):
-            st.session_state.vector_store = initialize_vector_store()
-            st.success("Vector store built successfully!")
-    except Exception as e:
-        st.error(f"Error initializing vector store: {str(e)}")
+def get_specialized_prompt(question: str, context: str, doc_sources: List[str]) -> str:
+    """Create specialized prompt with document sources"""
+    sources_text = "\n".join([f"- {source}" for source in doc_sources])
+    
+    if any(word in question.lower() for word in ['מאזן', 'טבלה', 'דוח', 'נתונים']):
+        return f"""
+        You are a financial data analyst. Create a clear, structured response in Hebrew.
+        
+        Available source documents:
+        {sources_text}
+        
+        Rules for your response:
+        1. Start by mentioning which specific documents you're using
+        2. Present financial data in clear, RTL-formatted tables
+        3. Use Hebrew column names
+        4. Format numbers with commas and right alignment
+        5. Include % symbol for percentages
+        6. Add explanatory text before and after tables
+        
+        Context: {context}
+        Question: {question}
+        """
+    else:
+        return f"""
+        You are a financial expert assistant. Respond in Hebrew with:
+        
+        Available source documents:
+        {sources_text}
+        
+        Format your response with:
+        1. Cite which specific documents you're using
+        2. Use bullet points for lists
+        3. Bold for key figures and important points
+        4. Organize information in clear sections
+        5. Maintain right-to-left (RTL) formatting
+        
+        Context: {context}
+        Question: {question}
+        """
 
-# Use the stored vector store for queries
-vector_store = st.session_state.vector_store
-
-# ---------------------------
-# Helper functions
-# ---------------------------
-def display_formatted_response(answer):
+def display_formatted_response(answer: str, sources: List[str] = None):
+    """Display the formatted response with enhanced styling"""
+    if sources:
+        st.markdown("**:blue[מקורות המידע:]**")
+        for source in sources:
+            st.markdown(f"""
+                <div class="source-citation">
+                    📄 {source}
+                </div>
+            """, unsafe_allow_html=True)
+        st.markdown("---")
+    
     if "|" in answer and "-|-" in answer:
         parts = answer.split("\n\n")
-        explanation = parts[0]
-        table_text = "\n".join([p for p in parts if "|" in p])
-        
-        st.markdown(explanation)
-        
-        # Convert markdown table to DataFrame
-        try:
-            lines = [line.strip() for line in table_text.split('\n') if line.strip()]
-            headers = [col.strip() for col in lines[0].split('|') if col.strip()]
-            data = []
-            for line in lines[2:]:  # skip the separator line
-                row = [cell.strip() for cell in line.split('|') if cell.strip()]
-                data.append(row)
-            
-            df = pd.DataFrame(data, columns=headers)
-            
-            # Display styled table
-            st.markdown("""
-                <style>
-                    .dataframe {
-                        direction: rtl;
-                        font-family: 'Arial', sans-serif;
-                        width: 100%;
-                        text-align: right;
-                    }
-                    .dataframe th {
-                        background-color: #1a365d;
-                        color: white;
-                        padding: 12px;
-                        text-align: right !important;
-                    }
-                    .dataframe td {
-                        background-color: rgba(255, 255, 255, 0.05);
-                        padding: 8px;
-                        text-align: right !important;
-                    }
-                    .dataframe tr:hover td {
-                        background-color: rgba(255, 255, 255, 0.1);
-                    }
-                </style>
-            """, unsafe_allow_html=True)
-            st.dataframe(df, use_container_width=True)
-        except Exception as e:
-            st.markdown(answer)  # fallback to regular markdown if parsing fails
+        for part in parts:
+            if "|" in part and "-|-" in part:
+                try:
+                    lines = [line.strip() for line in part.split('\n') if line.strip()]
+                    headers = [col.strip() for col in lines[0].split('|') if col.strip()]
+                    data = []
+                    for line in lines[2:]:
+                        row = [cell.strip() for cell in line.split('|') if cell.strip()]
+                        data.append(row)
+                    df = pd.DataFrame(data, columns=headers)
+                    st.dataframe(df, use_container_width=True)
+                except:
+                    st.markdown(part)
+            else:
+                st.markdown(part)
     else:
         st.markdown(answer)
 
-def get_specialized_prompt(question, context):
-    if any(word in question.lower() for word in ['מאזן', 'טבלה', 'השוואה', 'נתונים']):
-        return f"""
-        You are a financial data analyst. Create a clear, structured response:
-
-        1. First, identify which document(s) contain the relevant information
-        2. Then provide a brief explanation
-        3. Present the data in a format that can be converted to a pandas DataFrame
-        4. Use this exact format for tables:
-
-        Column1 | Column2 | Column3
-        --------|---------|--------
-        Value1  | Value2  | Value3
-
-        Rules:
-        - Mention the source document(s) in your explanation
-        - Use Hebrew column names
-        - Align numbers to the right
-        - Format numbers with commas
-        - Show percentages with % symbol
-        - Use clear section headers
-
-        Context: {context}
-        Question: {question}
-        """
-    else:
-        return f"""
-        Format your response with:
-        1. Mention which document(s) contain the information
-        2. Numbered points for lists
-        3. Bold for important values
-        4. Clear sections if needed
-        5. In the hebrew language and organize it.
-
-        Context: {context}
-        Question: {question}
-
-        Make the answer clear and well-structured.
-        """
-
 # ---------------------------
-# Chat Interface
+# Main Chat Interface
 # ---------------------------
+try:
+    gemini_model = initialize_gemini()
+    vector_store = initialize_vector_store()
+except Exception as e:
+    st.error(f"שגיאה באתחול השירותים: {str(e)}")
+    st.stop()
+
+# Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Display chat history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        if message["role"] == "assistant" and "sources" in message:
+            display_formatted_response(message["content"], message["sources"])
+        else:
+            st.markdown(message["content"])
 
 # Chat input
-if prompt := st.chat_input("Ask a question about your document..."):
+if prompt := st.chat_input("שאל שאלה על המסמכים שלך..."):
+    # Add user message
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     try:
-        relevant_docs = vector_store.similarity_search(prompt, k=3)
-        context = "\n\n".join([doc.page_content for doc in relevant_docs])
+        # Get relevant documents with scores
+        relevant_docs = get_relevant_documents(vector_store, prompt)
         
-        full_prompt = get_specialized_prompt(prompt, context)
-        
-        # Use Gemini model
-        chat_session = gemini_model.start_chat(history=[])
-        response = chat_session.send_message(full_prompt)
-        answer = response.text
-        
-        st.session_state.messages.append({"role": "assistant", "content": answer})
-        with st.chat_message("assistant"):
-            display_formatted_response(answer)
+        if not relevant_docs:
+            response_text = "לא נמצאו מסמכים רלוונטיים מספיק לשאלה שלך. אנא נסה לנסח את השאלה אחרת."
+            sources = []
+        else:
+            # Extract document sources and content
+            sources = [format_source_info(doc) for doc in relevant_docs]
+            context = "\n\n".join([doc.page_content for doc in relevant_docs])
             
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
+            # Generate response
+            full_prompt = get_specialized_prompt(prompt, context, sources)
+            response = gemini_model.generate_content(full_prompt)
+            response_text = response.text
 
-# Footer
-st.markdown("---")
-st.markdown("*Powered by OpenAI and FAISS*")
+        # Add assistant response
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": response_text,
+            "sources": sources
+        })
+        
+        with st.chat_message("assistant"):
+            display_formatted_response(response_text, sources)
+
+    except Exception as e:
+        st.error(f"שגיאה: {str(e)}")
+
+# Enhanced Footer
+st.markdown("""
+<div class="footer">
+    <p>Powered by Google Gemini and Pinecone</p>
+    <p style="margin-top: 0.5rem;">© 2024 CPA AI Assistant</p>
+</div>
+""", unsafe_allow_html=True) 
