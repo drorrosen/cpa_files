@@ -214,12 +214,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ---------------------------
+# API Key Setup from Secrets
+# ---------------------------
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
+PINECONE_ENVIRONMENT = "us-east-1"
+
+# ---------------------------
 # Initialize Services
 # ---------------------------
 @st.cache_resource
 def initialize_gemini():
     """Initialize Gemini model"""
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+    genai.configure(api_key=GEMINI_API_KEY)
     generation_config = {
         "temperature": 0.0,
         "top_p": 0.5,
@@ -235,8 +243,14 @@ def initialize_gemini():
 def initialize_vector_store():
     """Initialize Pinecone vector store"""
     embeddings_model = OpenAIEmbeddings(
-        openai_api_key=st.secrets["OPENAI_API_KEY"],
+        openai_api_key=OPENAI_API_KEY,
         model="text-embedding-3-large"
+    )
+    
+    # Initialize Pinecone with environment
+    pc = Pinecone(
+        api_key=PINECONE_API_KEY,
+        environment=PINECONE_ENVIRONMENT
     )
     
     return Pinecone.from_existing_index(
