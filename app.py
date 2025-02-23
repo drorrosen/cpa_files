@@ -332,34 +332,41 @@ def get_available_documents():
         # Extract unique filenames
         unique_docs = set()
         for doc, _ in results:
-            if 'file' in doc.metadata:
-                unique_docs.add(doc.metadata['file'])
+            # Check both original_file and file fields
+            if 'original_file' in doc.metadata:
+                unique_docs.add(doc.metadata['original_file'])
+            elif 'file' in doc.metadata:
+                # Decode the encoded filename
+                encoded_filename = doc.metadata['file']
+                if '_' in encoded_filename:
+                    _, original = encoded_filename.split('_', 1)
+                    unique_docs.add(original)
+                else:
+                    unique_docs.add(encoded_filename)
         return sorted(list(unique_docs))
     except Exception as e:
-        return f"Error fetching documents: {str(e)}"
+        st.sidebar.error(f"Error fetching documents: {str(e)}")
+        return []
 
-def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.3, k: int = 10) -> List[Document]:
+def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.5, k: int = 10) -> List[Document]:
     """Get relevant documents with similarity scores above threshold"""
     try:
-        # Add debug print
-        st.sidebar.write("Searching for documents...")
-        
         results = vector_store.similarity_search_with_score(query, k=k)
         
         # Debug print the scores
         st.sidebar.write("Found results:")
         for doc, score in results:
-            st.sidebar.write(f"Score: {score:.3f} - {doc.metadata.get('file', 'Unknown')}")
+            filename = doc.metadata.get('original_file') or doc.metadata.get('file', 'Unknown')
+            if '_' in filename and 'original_file' not in doc.metadata:
+                _, filename = filename.split('_', 1)
+            st.sidebar.write(f"Score: {score:.3f} - {filename}")
         
-        # Lower threshold and increase results
         filtered_results = [(doc, score) for doc, score in results if score >= score_threshold]
         filtered_results.sort(key=lambda x: x[1], reverse=True)
         
-        # Debug print filtered results
         st.sidebar.write(f"Filtered results (threshold {score_threshold}):")
         st.sidebar.write(f"Found {len(filtered_results)} relevant documents")
         
-        # Return up to 5 matches instead of 3
         return [doc for doc, _ in filtered_results[:5]]
     except Exception as e:
         st.sidebar.error(f"Error in get_relevant_documents: {str(e)}")
@@ -367,9 +374,15 @@ def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.
 
 def format_source_info(doc: Document) -> str:
     """Format document source information"""
-    source = doc.metadata.get('source', 'Unknown source')
-    page = doc.metadata.get('page', 'N/A')
-    return f"מסמך: {source} (עמוד {page})"
+    filename = doc.metadata.get('original_file')
+    if not filename:
+        filename = doc.metadata.get('file', 'Unknown source')
+        if '_' in filename:
+            _, filename = filename.split('_', 1)
+    
+    page = doc.metadata.get('chunk', 'N/A')
+    total_chunks = doc.metadata.get('total_chunks', '?')
+    return f"מסמך: {filename} (חלק {page}/{total_chunks})"
 
 def get_specialized_prompt(question: str, context: str, doc_sources: List[str]) -> str:
     """Create specialized prompt with document sources"""
