@@ -254,8 +254,24 @@ def initialize_vector_store():
     return Pinecone.from_existing_index(
         index_name="index",
         embedding=embeddings_model,
-        namespace="Default"
+        namespace="Default",
+        host="index-fmrj1el.svc.aped-4627-b74a.pinecone.io"
     )
+
+@st.cache_data
+def get_available_documents():
+    """Get list of unique documents in the vector store"""
+    try:
+        # Query with empty string to get sample of vectors
+        results = vector_store.similarity_search_with_score("", k=1000)
+        # Extract unique filenames
+        unique_docs = set()
+        for doc, _ in results:
+            if 'file' in doc.metadata:
+                unique_docs.add(doc.metadata['file'])
+        return sorted(list(unique_docs))
+    except Exception as e:
+        return f"Error fetching documents: {str(e)}"
 
 def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.7, k: int = 5) -> List[Document]:
     """Get relevant documents with similarity scores above threshold"""
@@ -367,6 +383,16 @@ for message in st.session_state.messages:
             display_formatted_response(message["content"], message["sources"])
         else:
             st.markdown(message["content"])
+
+# Add after the header and before the chat interface
+if st.sidebar.button("הצג מסמכים זמינים"):
+    documents = get_available_documents()
+    if isinstance(documents, list):
+        st.sidebar.write("מסמכים זמינים:")
+        for doc in documents:
+            st.sidebar.write(f"📄 {doc}")
+    else:
+        st.sidebar.error(documents)
 
 # Chat input
 if prompt := st.chat_input("שאל שאלה על המסמכים שלך..."):
