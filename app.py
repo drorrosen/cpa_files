@@ -221,6 +221,10 @@ GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
 PINECONE_ENVIRONMENT = "us-east-1"
 
+# Set Pinecone environment variables
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+os.environ["PINECONE_ENVIRONMENT"] = PINECONE_ENVIRONMENT
+
 # ---------------------------
 # Initialize Services
 # ---------------------------
@@ -245,12 +249,6 @@ def initialize_vector_store():
     embeddings_model = OpenAIEmbeddings(
         openai_api_key=OPENAI_API_KEY,
         model="text-embedding-3-large"
-    )
-    
-    # Initialize Pinecone with environment
-    pc = Pinecone(
-        api_key=PINECONE_API_KEY,
-        environment=PINECONE_ENVIRONMENT
     )
     
     return Pinecone.from_existing_index(
