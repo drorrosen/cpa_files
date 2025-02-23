@@ -228,22 +228,23 @@ st.markdown("""
     
     /* Document list items */
     .document-item {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.9);
         padding: 12px 15px;
         border-radius: 8px;
         margin: 8px 0;
         border-right: 4px solid #38BDF8;
         font-size: 1.1em;
-        color: #FFFFFF !important;
+        color: #000000 !important;
         font-weight: 500;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        text-shadow: none;
         display: block;
         transition: all 0.2s ease;
     }
 
     .document-item:hover {
-        background: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 1);
         transform: translateX(-5px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     /* Sidebar header */
