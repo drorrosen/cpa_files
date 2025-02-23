@@ -228,11 +228,31 @@ st.markdown("""
     
     /* Document list items */
     .document-item {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 8px 12px;
-        border-radius: 6px;
-        margin: 5px 0;
-        border-left: 3px solid #38BDF8;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin: 8px 0;
+        border-right: 4px solid #38BDF8;
+        font-size: 1.1em;
+        color: #FFFFFF !important;
+        font-weight: 500;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        display: block;
+        transition: all 0.2s ease;
+    }
+
+    .document-item:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateX(-5px);
+    }
+
+    /* Sidebar header */
+    .sidebar-header {
+        color: #38BDF8 !important;
+        font-size: 1.3em !important;
+        font-weight: bold !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -434,9 +454,9 @@ if st.sidebar.button("הצג מסמכים זמינים"):
     documents = get_available_documents()
     if isinstance(documents, list):
         st.sidebar.markdown('<div class="sidebar-content">', unsafe_allow_html=True)
-        st.sidebar.markdown("<h3 style='color: white;'>מסמכים זמינים:</h3>", unsafe_allow_html=True)
+        st.sidebar.markdown('<div class="sidebar-header">מסמכים זמינים</div>', unsafe_allow_html=True)
         for doc in documents:
-            st.sidebar.markdown(f'<div class="document-item">📄 {doc}</div>', unsafe_allow_html=True)
+            st.sidebar.markdown(f'<div class="document-item">📑 {doc}</div>', unsafe_allow_html=True)
         st.sidebar.markdown('</div>', unsafe_allow_html=True)
     else:
         st.sidebar.error(documents)
