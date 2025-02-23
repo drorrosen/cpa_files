@@ -8,3 +8,4 @@ numpy
 pathlib
 openai 
 langchain_community
+langchain_pinecone 
