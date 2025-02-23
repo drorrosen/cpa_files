@@ -348,25 +348,39 @@ def get_available_documents():
         st.sidebar.error(f"Error fetching documents: {str(e)}")
         return []
 
-def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.5, k: int = 10) -> List[Document]:
+def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.2, k: int = 20) -> List[Document]:
     """Get relevant documents with similarity scores above threshold"""
     try:
+        st.sidebar.write("🔍 Searching for documents...")
         results = vector_store.similarity_search_with_score(query, k=k)
         
-        # Debug print the scores
-        st.sidebar.write("Found results:")
+        if not results:
+            st.sidebar.warning("No results found in initial search")
+            return []
+            
+        # Debug print all scores
+        st.sidebar.write("📊 Raw Results:")
         for doc, score in results:
             filename = doc.metadata.get('original_file') or doc.metadata.get('file', 'Unknown')
             if '_' in filename and 'original_file' not in doc.metadata:
                 _, filename = filename.split('_', 1)
             st.sidebar.write(f"Score: {score:.3f} - {filename}")
         
+        # Filter with lower threshold
         filtered_results = [(doc, score) for doc, score in results if score >= score_threshold]
         filtered_results.sort(key=lambda x: x[1], reverse=True)
         
-        st.sidebar.write(f"Filtered results (threshold {score_threshold}):")
+        st.sidebar.write(f"🎯 Filtered results (threshold {score_threshold}):")
         st.sidebar.write(f"Found {len(filtered_results)} relevant documents")
         
+        if not filtered_results:
+            st.sidebar.warning("No documents passed the relevance threshold")
+            # Return top result anyway if available
+            if results:
+                st.sidebar.info("Returning top result despite low score")
+                return [results[0][0]]
+            return []
+            
         return [doc for doc, _ in filtered_results[:5]]
     except Exception as e:
         st.sidebar.error(f"Error in get_relevant_documents: {str(e)}")
