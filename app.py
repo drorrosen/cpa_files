@@ -338,16 +338,32 @@ def get_available_documents():
     except Exception as e:
         return f"Error fetching documents: {str(e)}"
 
-def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.7, k: int = 5) -> List[Document]:
+def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.3, k: int = 10) -> List[Document]:
     """Get relevant documents with similarity scores above threshold"""
-    results = vector_store.similarity_search_with_score(query, k=k)
-    
-    # Filter results above threshold and sort by score
-    filtered_results = [(doc, score) for doc, score in results if score >= score_threshold]
-    filtered_results.sort(key=lambda x: x[1], reverse=True)
-    
-    # Return top 3 matches
-    return [doc for doc, _ in filtered_results[:3]]
+    try:
+        # Add debug print
+        st.sidebar.write("Searching for documents...")
+        
+        results = vector_store.similarity_search_with_score(query, k=k)
+        
+        # Debug print the scores
+        st.sidebar.write("Found results:")
+        for doc, score in results:
+            st.sidebar.write(f"Score: {score:.3f} - {doc.metadata.get('file', 'Unknown')}")
+        
+        # Lower threshold and increase results
+        filtered_results = [(doc, score) for doc, score in results if score >= score_threshold]
+        filtered_results.sort(key=lambda x: x[1], reverse=True)
+        
+        # Debug print filtered results
+        st.sidebar.write(f"Filtered results (threshold {score_threshold}):")
+        st.sidebar.write(f"Found {len(filtered_results)} relevant documents")
+        
+        # Return up to 5 matches instead of 3
+        return [doc for doc, _ in filtered_results[:5]]
+    except Exception as e:
+        st.sidebar.error(f"Error in get_relevant_documents: {str(e)}")
+        return []
 
 def format_source_info(doc: Document) -> str:
     """Format document source information"""
