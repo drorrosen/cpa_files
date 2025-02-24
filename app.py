@@ -294,7 +294,7 @@ def initialize_gemini():
         "max_output_tokens": 8192,
     }
     return genai.GenerativeModel(
-        model_name="gemini-2.0-pro-exp-02-05",
+        model_name="gemini-1.5-pro",
         generation_config=generation_config,
     )
 
