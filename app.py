@@ -349,7 +349,7 @@ def get_available_documents():
         st.sidebar.error(f"Error fetching documents: {str(e)}")
         return []
 
-def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.6, k: int = 20) -> List[Document]:
+def get_relevant_documents(vector_store, query: str, score_threshold: float = 0.35, k: int = 20) -> List[Document]:
     """Get relevant documents with similarity scores above threshold"""
     try:
         st.sidebar.write("🔍 Searching for documents...")
