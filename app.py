@@ -514,6 +514,7 @@ if prompt := st.chat_input("שאל שאלה על המסמכים שלך..."):
             # Create Claude message
             response = claude_client.messages.create(
                 model="claude-3-7-sonnet-20250219",
+                temperature=0,
                 max_tokens=4096,
                 messages=[
                     {"role": "user", "content": full_prompt}
