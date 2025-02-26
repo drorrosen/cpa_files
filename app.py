@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import Pinecone
-import google.generativeai as genai
+import anthropic
 from typing import List
 from langchain.docstore.document import Document
 import pandas as pd
@@ -272,7 +272,7 @@ st.markdown("""
 # API Key Setup from Secrets
 # ---------------------------
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+ANTHROPIC_API_KEY = st.secrets["ANTHROPIC_API_KEY"]
 PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
 PINECONE_ENVIRONMENT = "us-east-1"
 
@@ -284,18 +284,10 @@ os.environ["PINECONE_ENVIRONMENT"] = PINECONE_ENVIRONMENT
 # Initialize Services
 # ---------------------------
 @st.cache_resource
-def initialize_gemini():
-    """Initialize Gemini model"""
-    genai.configure(api_key=GEMINI_API_KEY)
-    generation_config = {
-        "temperature": 0.0,
-        "top_p": 0.5,
-        "top_k": 20,
-        "max_output_tokens": 8192,
-    }
-    return genai.GenerativeModel(
-        model_name="gemini-1.5-pro",
-        generation_config=generation_config,
+def initialize_claude():
+    """Initialize Claude model"""
+    return anthropic.Anthropic(
+        api_key=ANTHROPIC_API_KEY,
     )
 
 @st.cache_resource
@@ -403,41 +395,33 @@ def get_specialized_prompt(question: str, context: str, doc_sources: List[str]) 
     """Create specialized prompt with document sources"""
     sources_text = "\n".join([f"- {source}" for source in doc_sources])
     
-    if any(word in question.lower() for word in ['מאזן', 'טבלה', 'דוח', 'נתונים']):
-        return f"""
-        You are a financial data analyst. Create a clear, structured response in Hebrew.
-        
-        Available source documents:
-        {sources_text}
-        
-        Rules for your response:
-        1. Start by mentioning which specific documents you're using
-        2. Present financial data in clear, RTL-formatted tables
-        3. Use Hebrew column names
-        4. Format numbers with commas and right alignment
-        5. Include % symbol for percentages
-        6. Add explanatory text before and after tables
-        
-        Context: {context}
-        Question: {question}
-        """
-    else:
-        return f"""
-        You are a financial expert assistant. Respond in Hebrew with:
-        
-        Available source documents:
-        {sources_text}
-        
-        Format your response with:
-        1. Cite which specific documents you're using
-        2. Use bullet points for lists
-        3. Bold for key figures and important points
-        4. Organize information in clear sections
-        5. Maintain right-to-left (RTL) formatting
-        
-        Context: {context}
-        Question: {question}
-        """
+    # New standardized prompt in Hebrew
+    return f"""
+    אתה מומחה לדיווחים כספיים ועוזר עסקי. המשימה שלך היא לקרוא, לנתח ולהסביר את תוכן הדוחות הכספיים של חברות בישראל. הדוחות כוללים את החלקים הבאים:
+
+    • *תיאור עסקי:* סקירה מקיפה של פעילות התאגיד לשנה המדוברת.
+    • *דוח דירקטוריון:* דיווח על מצב עסקי החברה, הכולל:
+       - חלק א': הסברים מהדירקטוריון למצב העסקי.
+       - חלק ב': חשיפה לסיכוני שוק ודרכי ניהולם.
+       - חלק ג': היבטי מימשל תאגידי.
+       - חלק ד': הוראות גילוי והצהרות הקשורות לדיווח הפיננסי.
+    • *דוחות כספיים:*
+       - דוח סקירה של רואה החשבון.
+       - דוחות מאוחדים הכוללים: מצב כספי, דוח רווח/הפסד, דוח שינויים בהון, ודוח תזרימי מזומנים.
+       - באורים לדוחות הכספיים.
+       - דוח על אפקטיביות הבקרה הפנימית על הדיווח הכספי.
+
+    עליך להציג את המידע בצורה ברורה ומסודרת, תוך שימוש בטבלאות (כאשר יש נתונים מספריים), הדגשה של נתונים מרכזיים והסברים מפורטים בשפה העברית עם עיצוב תומך RTL. כמו כן, ציין מהם המקורות מהם שאבת את המידע.
+
+    השאלות שיתבקשו ידרשו ניתוח מעמיק של הנתונים, השוואות בין תקופות ודיווח על מסקנות עיקריות בהתאם למידע בדוחות.
+    
+    מקורות זמינים:
+    {sources_text}
+    
+    הקשר: {context}
+    
+    שאלה: {question}
+    """
 
 def display_formatted_response(answer: str, sources: List[str] = None):
     """Display the formatted response with enhanced styling"""
@@ -475,7 +459,7 @@ def display_formatted_response(answer: str, sources: List[str] = None):
 # Main Chat Interface
 # ---------------------------
 try:
-    gemini_model = initialize_gemini()
+    claude_client = initialize_claude()
     vector_store = initialize_vector_store()
 except Exception as e:
     st.error(f"שגיאה באתחול השירותים: {str(e)}")
@@ -524,10 +508,18 @@ if prompt := st.chat_input("שאל שאלה על המסמכים שלך..."):
             sources = [format_source_info(doc) for doc in relevant_docs]
             context = "\n\n".join([doc.page_content for doc in relevant_docs])
             
-            # Generate response
+            # Generate response using Claude
             full_prompt = get_specialized_prompt(prompt, context, sources)
-            response = gemini_model.generate_content(full_prompt)
-            response_text = response.text
+            
+            # Create Claude message
+            response = claude_client.messages.create(
+                model="claude-3-7-sonnet-20250219",
+                max_tokens=4096,
+                messages=[
+                    {"role": "user", "content": full_prompt}
+                ]
+            )
+            response_text = response.content[0].text
 
         # Add assistant response
         st.session_state.messages.append({
@@ -545,7 +537,7 @@ if prompt := st.chat_input("שאל שאלה על המסמכים שלך..."):
 # Enhanced Footer
 st.markdown("""
 <div class="footer">
-    <p>Powered by Google Gemini and Pinecone</p>
+    <p>Powered by Anthropic Claude and Pinecone</p>
     <p style="margin-top: 0.5rem;">© 2024 CPA AI Assistant</p>
 </div>
 """, unsafe_allow_html=True) 
